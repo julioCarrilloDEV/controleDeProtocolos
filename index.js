@@ -19,6 +19,8 @@ app.set('views', path.join(__dirname, 'views'));
 
 app.use('/', routes);
 
+//Caregando meu sequelize
+require('./model/index')
 
 //Rota o servidor na porta especificada
 app.listen(port, () => console.log(`App listening in localhost:${port}`));
