@@ -11,5 +11,9 @@ router.get('/login', (req, res) =>{
     res.render('login');
 })
 
+router.get('/cadastro', (req, res) =>{
+    res.render('cadastro');
+})
+
 //exporta o módulo
 module.exports = router

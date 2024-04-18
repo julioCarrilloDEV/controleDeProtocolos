@@ -1,4 +1,4 @@
-const db = require('./index');
+const db = require('./conn');
 const { DataTypes } = require('sequelize');
 
 const Usuario = db.sequelize.define('usuario', {
@@ -7,7 +7,7 @@ const Usuario = db.sequelize.define('usuario', {
         primaryKey: true,
         autoIncrement: true,
     },
-    nome: {
+    usuario: {
         type: DataTypes.STRING
     },
     senha: {

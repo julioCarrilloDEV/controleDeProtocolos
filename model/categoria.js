@@ -1,4 +1,4 @@
-const db = require('./index');
+const db = require('./conn');
 const { DataTypes } = require('sequelize');
 
 const Categoria = db.sequelize.define('categoria', {
