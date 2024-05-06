@@ -14,7 +14,8 @@ const Usuario = db.sequelize.define('usuario', {
         type: DataTypes.STRING
     },
     tipoUsuario: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING, 
+        default: "comum"
     }
 });
 

@@ -1,6 +1,7 @@
 let express = require('express');
 //método do express de rota
-let router = express.Router()
+let router = express.Router();
+let create = require('../controller/createUsuario');
 
 
 router.get('/home', (req, res) =>{
@@ -14,6 +15,8 @@ router.get('/login', (req, res) =>{
 router.get('/cadastro', (req, res) =>{
     res.render('cadastro');
 })
+
+router.post('/cadastro', create);
 
 //exporta o módulo
 module.exports = router
