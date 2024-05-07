@@ -4,6 +4,7 @@ let router = express.Router();
 let createUsuario = require('../model/createUsuario');
 
 
+
 router.get('/home', (req, res) =>{
     res.render('home');
 })

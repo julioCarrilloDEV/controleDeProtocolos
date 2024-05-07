@@ -29,11 +29,12 @@
                     <div class="card-body ">
                         <i class="bi bi-person-circle" id="icon-login"></i>
                         <form method="post" id="form-cadastro">
+                            <input type="text" name="nome" id="cad_nome" class="form-control my-4 py-2" placeholder="Digite seu nome..." />
                             <input type="text" name="usuario" id="cad_usuario" class="form-control my-4 py-2" placeholder="Digite seu usuário..." />
                             <input type="text" name="senha" id="cad_senha" class="form-control my-4 py-2" placeholder="Digite sua senha..." />
                             <input type="text" name="" id="conf_Senha" class="form-control my-4 py-2" placeholder="Confirme sua senha..." />
                             <div class="text-center mt-3">
-                            <button class="btn btn-success btn-lg btn-cadastro">Cadastrar</button>
+                            <button type="button" class="btn btn-success btn-lg btn-cadastro">Cadastrar</button>
                             <a href="#" class="nav-link">Fazer login</a>
                             </div>
                         </form>
@@ -44,6 +45,7 @@
         </div>
       </section>
 
-      <script src="/controller/cadastro.js"></script>
+       <!-- Incluindo o arquivo cadastro.js -->
+    <script src="../controller/cadastro.js"></script>
 </body>
 </html>
