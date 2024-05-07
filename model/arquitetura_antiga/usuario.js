@@ -1,4 +1,4 @@
-const db = require('./conn');
+const db = require('../conn');
 const { DataTypes } = require('sequelize');
 
 const Usuario = db.sequelize.define('usuario', {
@@ -19,4 +19,4 @@ const Usuario = db.sequelize.define('usuario', {
     }
 });
 
-module.exports = Usuario;
+//module.exports = Usuario;

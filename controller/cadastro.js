@@ -1,5 +1,8 @@
 $(document).ready(function(){
-    $('.btn-cadastro').submit(function(){
+    $('.btn-cadastro').submit(function(event){
+        // Impede o envio padrão do formulário
+        event.preventDefault();
+        
         let cad_usuario = $('#cad_usuario').val()
         let cad_senha = $('#cad_senha').val()
         let conf_senha = $('#conf_senha').val()
