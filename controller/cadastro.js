@@ -7,11 +7,11 @@ $(document).ready(function(){
         let cad_senha = $('#cad_senha').val()
         let conf_senha = $('#conf_senha').val()
 
-        console.log('Senha: '+ cad_senha);
-        console.log('Senha: '+ conf_senha);
-         // Verifica se as senhas coincidem
-         if (cad_senha != conf_senha) {
+        // Verifica se as senhas coincidem
+        if (cad_senha !== conf_senha) {
             alert('As senhas não conferem!');
+            console.log('Senha: '+ cad_senha);
+            console.log('Senha: '+ conf_senha);
         }else{
 
             // Envia os dados para o servidor via AJAX

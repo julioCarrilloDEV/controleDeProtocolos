@@ -9,6 +9,7 @@ const port = 5000;
 
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'controller')));
 //Define o padrão .ejs como template engine. 
 app.set('view engine', 'ejs');
 
@@ -16,9 +17,6 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.set('views', path.join(__dirname, 'views'));
-// Define o diretório para os controladores
-//app.set('controller', path.join(__dirname, 'controller'));
-
 
 app.use('/', routes);
 
