@@ -13,17 +13,18 @@ module.exports = (req, res) => {
     // Executa a query no banco de dados
     sequelize.query(query)
         .then(result => {
-            if (result.length > 0) {
-                // Usuário encontrado
+            if (result[0].length > 0) {
                 // Envie uma resposta de sucesso
-                res.status(200).send({ user: usuario });
+                res.status(200).send({ 
+                    usuario: usuario 
+                });
             } else {
                 // Envie uma resposta de erro
                 res.status(401).send({ error: 'Usuário ou senha incorretos.' });
             }
         })
         .catch(error => {
-            console.error('Erro ao realizar login:', error);
+            console.error('Erro ao realizar login modelo:', error);
             res.status(500).send({ error: 'Erro interno do servidor' });
         });
 

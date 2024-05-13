@@ -16,10 +16,6 @@ const requireAuth = (req, res, next) => {
     }
 };
 
-// Rota protegida que requer autenticação
-router.get('/home', (req, res) => {
-  res.send('Bem-vindo ao seu perfil!');
-});
 
 router.get('/home', (req, res) =>{
     res.render('home');
