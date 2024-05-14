@@ -12,7 +12,7 @@ const port = 5000;
 app.use(session({
     secret: 'sua_chave_secreta_aqui', // Chave secreta para assinar o cookie da sessão
     resave: false, // Evita que a sessão seja regravada no servidor a cada requisição
-    saveUninitialized: false // Não salva sessões vazias (sem dados)
+    saveUninitialized: true // Não salva sessões vazias (sem dados)
   }));
 
 app.use(express.static(path.join(__dirname, 'public')));

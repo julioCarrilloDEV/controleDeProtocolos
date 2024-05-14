@@ -14,6 +14,8 @@ module.exports = (req, res) => {
     sequelize.query(query)
         .then(result => {
             if (result[0].length > 0) {
+                // Define as informações de sessão
+                req.session.usuario = usuario;
                 // Envie uma resposta de sucesso
                 res.status(200).send({ 
                     usuario: usuario 

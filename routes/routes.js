@@ -16,10 +16,21 @@ const requireAuth = (req, res, next) => {
     }
 };
 
+// Rota protegida que requer autenticação
+router.get('/home', (req, res) => {
+    // Verifica se o usuário está autenticado
+    if (req.session.usuario) {
+        res.render('home', { usuario: req.session.usuario });
+    } else {
+        // Se o usuário não estiver autenticado, redireciona para a página de login
+        res.redirect('/login');
+    }
+});
 
-router.get('/home', (req, res) =>{
-    res.render('home');
-})
+
+// router.get('/home', (req, res) =>{
+//     res.render('home');
+// })
 
 router.get('/login', (req, res) =>{
     res.render('login');
