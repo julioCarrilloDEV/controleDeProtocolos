@@ -18,7 +18,7 @@ module.exports = (req, res) => {
                 req.session.usuario = usuario;
                 // Envie uma resposta de sucesso
                 res.status(200).send({ 
-                    usuario: usuario 
+                    usuario: usuario,
                 });
             } else {
                 // Envie uma resposta de erro

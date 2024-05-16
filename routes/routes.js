@@ -3,6 +3,7 @@ let express = require('express');
 let router = express.Router();
 let createUsuario = require('../model/createUsuario');
 let realizarLogin = require('../model/login');
+let pegarDados = require('../model/getDataSession');
 
 
 // Middleware para verificar se o usuário está autenticado
@@ -26,11 +27,7 @@ router.get('/home', (req, res) => {
         res.redirect('/login');
     }
 });
-
-
-// router.get('/home', (req, res) =>{
-//     res.render('home');
-// })
+router.get('/home', pegarDados);
 
 router.get('/login', (req, res) =>{
     res.render('login');

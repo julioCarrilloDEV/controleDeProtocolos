@@ -11,10 +11,7 @@ $(document).ready(function(){
                 senha: senha_usuario
             },
             success: function(data){
-                console.log('DADOS: ');
-                console.log(data.usuario);
                 window.location.href = '/home';
-                
                 req.session.usuario = data.usuario;
             },
             error: function(){
