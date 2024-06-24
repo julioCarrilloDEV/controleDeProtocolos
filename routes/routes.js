@@ -3,35 +3,12 @@ let express = require('express');
 let router = express.Router();
 let createUsuario = require('../model/createUsuario');
 let realizarLogin = require('../model/login');
-let pegarDados = require('../model/getDataSession');
 
-
-// Middleware para verificar se o usuário está autenticado
-const requireAuth = (req, res, next) => {
-    // Se o usuário não estiver autenticado, redireciona para a página de login
-    if (!req.session.usuario) {
-        res.redirect('/login');
-    } else {
-        // Se o usuário estiver autenticado, permite que a próxima rota seja chamada
-        next();
-    }
-};
-
-// Rota protegida que requer autenticação
-router.get('/home', (req, res) => {
-    // Verifica se o usuário está autenticado
-    if (req.session.usuario) {
-        res.render('home', { usuario: req.session.usuario });
-    } else {
-        // Se o usuário não estiver autenticado, redireciona para a página de login
-        res.redirect('/login');
-    }
-});
-router.get('/home', pegarDados);
-
+// Rota para o login
 router.get('/login', (req, res) =>{
     res.render('login');
 })
+router.post('/login', realizarLogin);
 
 router.get('/cadastro', (req, res) =>{
     res.render('cadastro');
@@ -39,8 +16,19 @@ router.get('/cadastro', (req, res) =>{
 
 router.post('/cadastro', createUsuario);
 
-// Rota para o login
-router.post('/login', realizarLogin);
+// Rota protegida que requer autenticação
+router.get('/home', (req, res) => {
+    // Verifica se o usuário está autenticado
+    if (req.session.usuario) {
+        res.render('home', { 
+            nomeUsuario: req.session.usuario.nomeUsuario,
+            tipo_usuario: req.session.usuario.tipo_usuario,
+            usuario: req.session.usuario.usuario
+         });
+    } else {
+        res.redirect('/login');
+    }
+});
 
 // Rota para o logout
 router.get('/logout', (req, res) => {

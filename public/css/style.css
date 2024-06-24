@@ -8,3 +8,8 @@
 #icon-login{
     font-size: 3rem;
 }
+
+#btnLogout{
+    display: flex; 
+    align-items: center;
+}
