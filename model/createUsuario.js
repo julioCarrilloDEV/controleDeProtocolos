@@ -2,12 +2,12 @@ const { sequelize } = require('./conn');
 const { error } = require('console');
 
 module.exports = (req, res) => {
-    const { nome, usuario, senha } = req.body;
-
+    const { nome, usuario, senha, tipoUsuario } = req.body;
+    
     // Query SQL para inserir um novo usuário
     const query = `
         INSERT INTO usuario (nome, usuario, senha, tipoUsuario)
-        VALUES ('${nome}', '${usuario}', '${senha}', 'comum');
+        VALUES ('${nome}', '${usuario}', '${senha}', '${tipoUsuario}');
     `;
 
     // Executa a query no banco de dados

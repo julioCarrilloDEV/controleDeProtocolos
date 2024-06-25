@@ -13,7 +13,7 @@ $(document).ready(function(){
             console.log('Senha: '+ cad_senha);
             console.log('Senha: '+ conf_senha);
         }else{
-
+            let cad_tipoUsuario = 'comum';
             // Envia os dados para o servidor via AJAX
             $.ajax({
                 url: '/cadastro', // URL da rota no servidor para cadastrar o usuário
@@ -21,13 +21,16 @@ $(document).ready(function(){
                 data: {
                     nome: cad_nome,
                     usuario: cad_usuario,
-                    senha: cad_senha
+                    senha: cad_senha, 
+                    tipoUsuario: cad_tipoUsuario
                 },
                 success: function(response) {
-                    // Se o cadastro for bem-sucedido, exibe uma mensagem de sucesso
-                    alert('Cadastro realizado com sucesso!');
-                    // Redireciona para a página de login
-                    window.location.href = '/login';
+                    Swal.fire({
+                        title: "Usuário cadastrado com sucesso",
+                        icon: "success"
+                    }).then(() => {
+                        window.location.href = '/login';
+                    });
                 },
                 error: function(error) {
                     // Se ocorrer um erro, exibe uma mensagem de erro

@@ -16,7 +16,7 @@ router.get('/cadastro', (req, res) =>{
 
 router.post('/cadastro', createUsuario);
 
-// Rota protegida que requer autenticação
+// Rota que requer autenticação
 router.get('/home', (req, res) => {
     // Verifica se o usuário está autenticado
     if (req.session.usuario) {
