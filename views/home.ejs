@@ -2,6 +2,11 @@
     <div class="container">
         <!-- Título -->
         <div class="row title">
+            <div class="col-2 text-start">
+                <button class="btn btn-light btnSidebarToggle" >
+                    <i class="bi bi-list"></i>
+                </button>
+            </div>
             <div class="col-10">
                 <h1>Controle de Protocolos</h1>
             </div>
@@ -25,25 +30,48 @@
         </div>
     </div>
     
-    <!-- Navbar na parte inferior -->
-    <div class="container p-0 fixed-bottom bg-secondary-subtle">
-        <ul class="nav row text-center text-secondary">
-            <li class="nav-item col-4">
-                <a class="nav-link" href="#">
-                    <i class="bi bi-search"></i> <p>Buscar</p>
+
+    <!-- Sidebar -->
+    <div class="flex-column flex-shrink-0 p-3 text-white bg-dark sidebar" >
+            <span class="fs-4">Uniprotocols</span>
+            <i class="bi bi-x-lg close-btn btnSidebarToggle"></i>
+        <hr>
+        <ul class="nav nav-pills flex-column mb-auto">
+            <li class="nav-item">
+                <a href="#" class="nav-link active" aria-current="page">
+                    <i class="bi bi-house me-1"></i> 
+                    Home
                 </a>
             </li>
-            <li class="nav-item col-4">
-                <a class="nav-link" href="#">
-                    <i class="bi bi-house"></i> <p>Home</p>
+            <li>
+                <a href="#" class="nav-link text-white">
+                    <i class="bi bi-grid me-1"></i>
+                    Categorias
                 </a>
             </li>
-            <li class="nav-item col-4">
-                <a class="nav-link" href="#">
-                    <i class="bi bi-star"></i> <p>Favoritos</p>
+            <li>
+                <a href="#" class="nav-link text-white">
+                    <i class="bi bi-file-earmark-text me-1"></i>
+                    Protocolos
                 </a>
             </li>
+            <li>
+                <a href="#" class="nav-link text-white">
+                    <i class="bi bi-star me-1"></i>
+                    Favoritos
+                </a>
+            </li>
+
         </ul>
+        <hr>
+        <div>
+            <a href="#" class="align-items-center text-white text-decoration-none" id="perfil">
+                <img src="https://p1.hiclipart.com/preview/843/601/229/avatar-icon-human-icon-person-icon-profile-icon-worker-icon-white-png-clipart.jpg" alt="" width="32" height="32" class="rounded-circle me-2">
+                <strong>mdo</strong>
+            </a>
+            
+        </div>
     </div>
 
+ 
     <%- include('partials/footer') %>
