@@ -18,6 +18,7 @@
     width: 240px;
     display: none;
     position: fixed;
+    z-index: 1050;
     top: 0;
     left: 0;
     height: 100vh;
@@ -28,4 +29,16 @@
     top: 10px;
     right: 10px;
     cursor: pointer;
+}
+
+#buscar-categorias {
+    border-radius: 20px;
+}
+
+#lista-categorias .list-group-item {
+    cursor: pointer;
+}
+
+#lista-categorias .list-group-item:hover {
+    background-color: #f8f9fa;
 }

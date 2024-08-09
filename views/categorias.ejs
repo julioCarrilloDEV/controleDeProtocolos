@@ -1,0 +1,29 @@
+<%- include('partials/header') %>
+
+    <div class="container mt-4" id="container-categorias">
+    <!-- Campo de Busca -->
+        <div class="row mb-3">
+            <div class="col-12">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Buscar categorias..." id="buscar-categorias">
+                    <button class="btn btn-outline-secondary" type="button" id="button-addon2">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+            <!-- Lista de Categorias -->
+        <div class="row">
+            <div class="col-12">
+                <div class="list-group" id="lista-categorias">
+                    <a href="#" class="list-group-item list-group-item-action">Categoria 1</a>
+                    <a href="#" class="list-group-item list-group-item-action">Categoria 2</a>
+                    <a href="#" class="list-group-item list-group-item-action">Categoria 3</a>
+                    <a href="#" class="list-group-item list-group-item-action">Categoria 4</a>
+                    <!-- Adicione mais categorias conforme necessário -->
+                </div>
+            </div>
+        </div>
+    </div>
+<%- include('partials/footer') %>

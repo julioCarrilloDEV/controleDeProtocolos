@@ -30,6 +30,10 @@ router.get('/home', (req, res) => {
     }
 });
 
+router.get('/categorias', (req, res) => {
+    res.render('categorias');
+})
+
 // Rota para o logout
 router.get('/logout', (req, res) => {
     // Destroi a sessão

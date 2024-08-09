@@ -1,77 +1,14 @@
 <%- include('partials/header') %>
-    <div class="container">
-        <!-- Título -->
-        <div class="row title">
-            <div class="col-2 text-start">
-                <button class="btn btn-light btnSidebarToggle" >
-                    <i class="bi bi-list"></i>
-                </button>
-            </div>
-            <div class="col-10">
-                <h1>Controle de Protocolos</h1>
-            </div>
-        </div>
-
-        <div class="row justify-content-end mt-1">
-            <div class="col-auto">
-                <button type="button" class="btn btn-light" id="btnLogout">
-                    <i class="bi bi-box-arrow-right me-1"></i>
-                    <span>Sair</span>
-                </button>
-            </div>
-        </div>
-        <!-- Conteúdo Geral -->
-        <div class="row">
-            <div class="col">
-                <h1>Seja bem-vindo, <%= nomeUsuario %></h1>
-                <h1>Seu usuário é: <%= usuario %></h1>
-                <h1>Seu tipo de usuário é: <%= tipo_usuario %></h1>
-            </div>
+    
+    
+    <!-- Conteúdo Geral -->
+    <div class="row">
+        <div class="col">
+            <h1>Seja bem-vindo, <%= nomeUsuario %></h1>
+            <h1>Seu usuário é: <%= usuario %></h1>
+            <h1>Seu tipo de usuário é: <%= tipo_usuario %></h1>
         </div>
     </div>
     
-
-    <!-- Sidebar -->
-    <div class="flex-column flex-shrink-0 p-3 text-white bg-dark sidebar" >
-            <span class="fs-4">Uniprotocols</span>
-            <i class="bi bi-x-lg close-btn btnSidebarToggle"></i>
-        <hr>
-        <ul class="nav nav-pills flex-column mb-auto">
-            <li class="nav-item">
-                <a href="#" class="nav-link active" aria-current="page">
-                    <i class="bi bi-house me-1"></i> 
-                    Home
-                </a>
-            </li>
-            <li>
-                <a href="#" class="nav-link text-white">
-                    <i class="bi bi-grid me-1"></i>
-                    Categorias
-                </a>
-            </li>
-            <li>
-                <a href="#" class="nav-link text-white">
-                    <i class="bi bi-file-earmark-text me-1"></i>
-                    Protocolos
-                </a>
-            </li>
-            <li>
-                <a href="#" class="nav-link text-white">
-                    <i class="bi bi-star me-1"></i>
-                    Favoritos
-                </a>
-            </li>
-
-        </ul>
-        <hr>
-        <div>
-            <a href="#" class="align-items-center text-white text-decoration-none" id="perfil">
-                <img src="https://p1.hiclipart.com/preview/843/601/229/avatar-icon-human-icon-person-icon-profile-icon-worker-icon-white-png-clipart.jpg" alt="" width="32" height="32" class="rounded-circle me-2">
-                <strong>mdo</strong>
-            </a>
-            
-        </div>
-    </div>
-
  
     <%- include('partials/footer') %>
