@@ -13,17 +13,17 @@
             </div>
         </div>
 
-            <!-- Lista de Categorias -->
+        <!-- Lista de Categorias -->
         <div class="row">
             <div class="col-12">
                 <div class="list-group" id="lista-categorias">
-                    <a href="#" class="list-group-item list-group-item-action">Categoria 1</a>
-                    <a href="#" class="list-group-item list-group-item-action">Categoria 2</a>
-                    <a href="#" class="list-group-item list-group-item-action">Categoria 3</a>
-                    <a href="#" class="list-group-item list-group-item-action">Categoria 4</a>
-                    <!-- Adicione mais categorias conforme necessário -->
+                    <!-- Itera sobre cada categoria e gera um item da lista para cada uma -->
+                    <% categorias.forEach(categoria => { %>
+                        <a href="#" class="list-group-item list-group-item-action"><%= categoria.nomeCategoria %></a>
+                    <% }); %>
                 </div>
             </div>
         </div>
     </div>
+
 <%- include('partials/footer') %>

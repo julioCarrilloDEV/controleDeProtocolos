@@ -3,6 +3,7 @@ let express = require('express');
 let router = express.Router();
 let createUsuario = require('../model/createUsuario');
 let realizarLogin = require('../model/login');
+const categoriaModel = require('../model/categorias');  // Aponta para o arquivo combinado
 
 // Rota para o login
 router.get('/login', (req, res) =>{
@@ -30,9 +31,17 @@ router.get('/home', (req, res) => {
     }
 });
 
-router.get('/categorias', (req, res) => {
-    res.render('categorias');
-})
+
+router.get('/categorias', async (req, res) => {
+    try {
+        // Chama a função buscarCategorias do modelo para obter as categorias
+        const categorias = await categoriaModel.buscarCategorias();
+        res.render('categorias', { categorias });
+    } catch (error) {
+        res.status(500).send('Erro ao carregar categorias');
+    }
+});
+
 
 // Rota para o logout
 router.get('/logout', (req, res) => {
