@@ -4,6 +4,7 @@ let router = express.Router();
 let createUsuario = require('../model/createUsuario');
 let realizarLogin = require('../model/login');
 const categoriaModel = require('../model/categorias');  // Aponta para o arquivo combinado
+const protocoloModel = require('../model/protocolos');
 
 // Rota para o login
 router.get('/login', (req, res) =>{
@@ -41,6 +42,15 @@ router.get('/categorias', async (req, res) => {
         res.status(500).send('Erro ao carregar categorias');
     }
 });
+
+router.get('/protocolos', async (req, res) => {
+    try{
+        const protocolos = await protocoloModel.buscarProtocolos();
+        res.render('protocolos', {protocolos});
+    } catch(e){
+        res.status(500).send('Erro ao carregar os protocolos');
+    }
+})
 
 
 // Rota para o logout

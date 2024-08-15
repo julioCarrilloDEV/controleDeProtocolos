@@ -1,0 +1,37 @@
+<%- include('partials/header') %>
+
+    <div class="container mt-4" id="container-protocolos">
+    <!-- Campo de Busca -->
+        <div class="row mb-3">
+            <div class="col-12">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Buscar protocolos..." id="buscar-protocolos">
+                    <button class="btn btn-outline-secondary" type="button" id="button-addon2">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lista de Protocolos -->
+        <div class="row">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Nome do protocolo</th>
+                        <th scope="col">Categoria</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% protocolos.forEach(protocolo => { %>
+                        <tr>
+                            <td><%= protocolo.descricao %></td>
+                            <td><%= protocolo.nomeCategoria %></td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+<%- include('partials/footer') %>
