@@ -5,6 +5,8 @@ let createUsuario = require('../model/createUsuario');
 let realizarLogin = require('../model/login');
 const categoriaModel = require('../model/categorias');  // Aponta para o arquivo combinado
 const protocoloModel = require('../model/protocolos');
+const perfilModel = require('../model/perfil');
+
 
 // Rota para o login
 router.get('/login', (req, res) =>{
@@ -52,6 +54,15 @@ router.get('/protocolos', async (req, res) => {
     }
 })
 
+router.post('/perfil', async (req,res) => {
+    const {nome, tipo, usuario} = req.body;
+    try{
+        const userInfo = await perfilModel.getUserInfo(nome, tipo, usuario);
+        res.send(userInfo)
+    }catch(e){
+        res.status(500).send('Erro ao buscar informações do perfil.');
+    }
+});
 
 // Rota para o logout
 router.get('/logout', (req, res) => {
