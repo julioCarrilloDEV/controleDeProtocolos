@@ -1,4 +1,4 @@
-const Sequelize = require('sequelize');
+const { Sequelize } = require("sequelize");
 
 const sequelize = new Sequelize('controleprotocolos', 'root', '', {
     host: '127.0.0.1',
@@ -17,6 +17,5 @@ sequelize.authenticate()
     });
 
 module.exports = {
-    Sequelize,
     sequelize
 };

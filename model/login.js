@@ -13,20 +13,21 @@ module.exports = (req, res) => {
     // Executa a query no banco de dados
     sequelize.query(query)
         .then(result => {
-            /* o Sequelize retorna os resultados em um formato específico. 
-            Esse formato é um array, onde o primeiro elemento (result[0]) é a matriz contendo os resultados da consulta, 
-            e o segundo elemento (result[1]) é um objeto com metadados sobre a execução da consulta. */
             if (result[0].length > 0) {
-                const user = result[0][0]; // Assume que result[0] tem os dados dos usuários
-                // Define as informações de sessão
-                req.session.usuario = {
-                    nomeUsuario: user.nome,
-                    tipo_usuario: user.tipoUsuario,
-                    usuario: user.usuario
-                };
-                res.status(200).send({ message: 'Login bem-sucedido' })
+                const user = result[0][0];
+                    // Armazena os valores na sessão
+                    req.session.user = {
+                        usuario: user.usuario,
+                        nome: user.nome,
+                        tipoUsuario: user.tipoUsuario
+                    };
+                    
+                    res.render('home', { 
+                        nome: user.nome,
+                        tipoUsuario: user.tipoUsuario,
+                        usuario: user.usuario
+                    });
             } else {
-                // Envie uma resposta de erro
                 res.status(401).send({ error: 'Usuário ou senha incorretos.' });
             }
         })
@@ -34,5 +35,4 @@ module.exports = (req, res) => {
             console.error('Erro ao realizar login modelo:', error);
             res.status(500).send({ error: 'Erro interno do servidor' });
         });
-
 };
