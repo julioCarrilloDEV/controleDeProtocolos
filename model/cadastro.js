@@ -1,9 +1,11 @@
 const { sequelize } = require('./conn');
-const { error } = require('console');
 
 module.exports = (req, res) => {
-    const { nome, usuario, senha, tipoUsuario } = req.body;
-    
+    const { nome, usuario, senha, conf_senha} = req.body;
+    const tipoUsuario = 'comum';
+    if (senha !== conf_senha) {
+        return res.status(400).json({ error: 'As senhas não coincidem' });
+    }
     // Query SQL para inserir um novo usuário
     const query = `
         INSERT INTO usuario (nome, usuario, senha, tipoUsuario)
@@ -15,7 +17,7 @@ module.exports = (req, res) => {
         .then(() => {
             console.log('Usuário inserido com sucesso');
             // Retornar a URL de redirecionamento
-            res.redirect('/login');
+            res.redirect('/');
         })
         .catch(err => {
             console.error('Erro ao inserir usuário:', err);

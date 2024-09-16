@@ -20,6 +20,7 @@ app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'controller')));
 
 //para trabalhar com requisições post em node, é necessário o bodyParser
 app.use(bodyParser.json());
