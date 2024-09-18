@@ -1,14 +1,25 @@
 const { sequelize } = require('./conn');
 
-module.exports = {
-    buscarCategorias: async () => {
-        try {
-            const query = `SELECT * FROM categoria`;
-            // Pausa a execução da função até que a consulta ao banco de dados seja concluída para então atribuir o resultado à variável
-            const [categorias] = await sequelize.query(query);
-            return categorias;  // Retorna o array de categorias
-        } catch (error) {
-            throw new Error('Erro ao buscar categorias: ' + error.message);
-        }
+module.exports = (req, res) =>{
+
+    if(!req.session.user) {
+        return res.status(401).send('Você precisa fazer login para acessar esta página.');
     }
+
+    const {id} = req.session.user;
+
+    const query = `
+        SELECT * FROM categoria INNER JOIN usuario_categoria ON idCategoria = categoriaID WHERE usuarioID = ${id};
+    `;
+
+    sequelize.query(query)
+        .then(categorias => {
+            res.json(categorias[0]);
+        })
+        .catch(err => {
+            console.error('Erro ao buscar categorias:', err);
+            res.status(500).json({ error: 'Erro interno do servidor' });
+        });
+
 };
+

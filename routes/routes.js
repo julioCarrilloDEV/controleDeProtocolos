@@ -3,6 +3,7 @@ let express = require('express');
 const router = express.Router();
 const login = require('../model/login');
 const cadastro = require('../model/cadastro');
+const categorias = require('../model/categorias');
 
 // Rota para o login
 router.get('/', (req, res) =>{
@@ -33,6 +34,24 @@ router.get('/cadastro', (req, res) => {
 
 // Rota para cadastro
 router.post('/cadastro', cadastro);
+
+// Rota para a página de categorias
+router.get('/categorias', (req, res) => {
+    if (req.session.user) {
+        res.render('categorias', { usuario: req.session.user.usuario });
+    } else {
+        res.status(401).send('Você precisa fazer login para acessar esta página.');
+    }
+});
+
+// Rota para buscar categorias via AJAX com validação de sessão
+router.get('/api/categorias', (req, res) => {
+    if (req.session.user) {
+        categorias(req, res);
+    } else {
+        res.status(401).send('Você precisa fazer login para acessar esta página.');
+    }
+});
 
 //exporta o módulo
 module.exports = router;

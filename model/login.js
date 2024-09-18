@@ -6,7 +6,7 @@ module.exports = (req, res) => {
     
     // Query SQL para buscar usuário correspondente
     const query = `
-        SELECT usuario, nome, tipoUsuario, senha FROM usuario
+        SELECT id, usuario, nome, tipoUsuario, senha FROM usuario
         WHERE usuario = '${usuario}' AND senha = '${senha}';
     `;
 
@@ -17,12 +17,14 @@ module.exports = (req, res) => {
                 const user = result[0][0];
                     // Armazena os valores na sessão
                     req.session.user = {
+                        id: user.id,
                         usuario: user.usuario,
                         nome: user.nome,
                         tipoUsuario: user.tipoUsuario
                     };
                     
                     res.render('home', { 
+                        id: user.id,
                         nome: user.nome,
                         tipoUsuario: user.tipoUsuario,
                         usuario: user.usuario
