@@ -4,6 +4,7 @@ const router = express.Router();
 const login = require('../model/login');
 const cadastro = require('../model/cadastro');
 const categorias = require('../model/categorias');
+const protocolos = require('../model/protocolos');
 
 // Rota para o login
 router.get('/', (req, res) =>{
@@ -15,7 +16,12 @@ router.post('/', login);
 // Exemplo de rota protegida que verifica a sessão
 router.get('/home', (req, res) => {
     if (req.session.user) {
-        res.send(`Bem-vindo, ${req.session.user.nome}!`);
+        res.render('home', { 
+            id: req.session.user.id,
+            nome: req.session.user.nome,
+            tipoUsuario: req.session.user.tipoUsuario,
+            usuario: req.session.user.usuario 
+        });
     } else {
         res.status(401).send('Você precisa fazer login para acessar esta página.');
     }
@@ -52,6 +58,24 @@ router.get('/api/categorias', (req, res) => {
         res.status(401).send('Você precisa fazer login para acessar esta página.');
     }
 });
+
+router.get('/protocolos', (req, res) => {
+    if (req.session.user) {
+        res.render('protocolos', { usuario: req.session.user.usuario });
+    } else {
+        res.status(401).send('Você precisa fazer login para acessar esta página.');
+    }
+});
+
+router.get('/api/protocolos', (req, res) => {
+    if (req.session.user) {
+        protocolos(req, res);
+    } else {
+        res.status(401).send('Você precisa fazer login para acessar esta página.');
+    }
+});
+
+
 
 //exporta o módulo
 module.exports = router;

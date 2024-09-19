@@ -1,4 +1,5 @@
-<%- include('partials/header') %>
+<%- include('partials/head.html') %>
+<%- include('partials/header.html') %>
 
     <div class="container mt-4" id="container-protocolos">
     <!-- Campo de Busca -->
@@ -22,16 +23,11 @@
                         <th scope="col">Categoria</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <% protocolos.forEach(protocolo => { %>
-                        <tr>
-                            <td><%= protocolo.descricao %></td>
-                            <td><%= protocolo.nomeCategoria %></td>
-                        </tr>
-                    <% }); %>
+                <tbody id="tabela-protocolos">
+                    
                 </tbody>
             </table>
         </div>
     </div>
-
-<%- include('partials/footer') %>
+<script src="protocolos.js"></script>
+<%- include('partials/footer.html') %>
