@@ -12,5 +12,5 @@ $(document).ready(function(){
                 console.error('Erro ao buscar categorias:', error);
             }
         })
-    });
+});
 
