@@ -1,0 +1,31 @@
+
+    <%- include('partials/head.html') %>
+    <%- include('partials/header.html') %>
+
+    <div class="container mt-4" id="container-categoriasProtocolos">
+        <!-- Campo de Busca -->
+        <div class="row mb-3">
+            <div class="col-12">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Buscar categorias..." id="buscar-categorias">
+                    <button class="btn btn-outline-secondary" type="button" id="button-addon2">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lista de protocolos com base na categoria -->
+        <div class="row">
+            <div class="col-12">
+                <div class="list-group" id="lista-protocolosCategoria">
+                    <h1>Seu ID é: <%= idCategoria %></h1>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="categorias-protocolos.js"></script>
+
+    <%- include('partials/footer.html') %>
