@@ -23,7 +23,7 @@ router.get('/api/categorias', (req, res) => {
 
 
 // Rota para acessar protocolos associados a uma categoria
-router.get('/categorias/protocolos', (req, res) => {
+router.get('/categorias/protocolos/:idCategoria', (req, res) => {
     if (req.session.user) {
         res.render('categoriasProtocolos', { idCategoria: req.params.idCategoria });
     } else {
@@ -34,7 +34,6 @@ router.get('/categorias/protocolos', (req, res) => {
 // Rota para buscar protocolos associados a uma categoria
 router.get('/api/categorias/protocolos/:idCategoria', (req, res) => {
     if (req.session.user) {
-        console.log(`Accessing /api/categorias/protocolos/${req.params.idCategoria}`);
         categorias_protocolos(req, res);
     } else {
         res.status(401).send('Você foi desconectado.');
