@@ -1,9 +1,8 @@
-
 <%- include('partials/head.html') %>
 <%- include('partials/header.html') %>
 
     <div class="container mt-4" id="container-categoriasProtocolos">
-        <!-- Campo de Busca -->
+    <!-- Campo de Busca -->
         <div class="row mb-3">
             <div class="col-12">
                 <div class="input-group">
@@ -15,17 +14,39 @@
             </div>
         </div>
 
-        <!-- Lista de protocolos com base na categoria -->
+        <!-- Lista de Categorias -->
         <div class="row">
             <div class="col-12">
-                <div class="list-group" id="lista-protocolosCategoria">
-                    <h1>Seu ID é: <%= idCategoria %></h1>
+                <h3>Categoria: <span id="nomeCat"></span></h3>
+                <hr>
+                <div class="list-group" id="lista-categoriasProtocolos">
                     
                 </div>
             </div>
         </div>
     </div>
 
-<script src="categorias_protocolos.js"></script>
+<!-- <script src="categoriasProtocolos.js"></script> -->
+<script>
+    const idCategoria = "<%= idCategoria %>";
+    $(document).ready(function(){
+    $.ajax({
+        url: `/api/categorias/protocolos/${idCategoria}`,
+        method: 'GET',
+        success: function(data) {
+            $('#nomeCat').text(data[0].nomeCategoria);
+            const protocolosList = $('#lista-categoriasProtocolos');
+            data.forEach(protocolo => {
+                protocolosList.append(`
+                    <a class="list-group-item list-group-item-action">${protocolo.descricao}</a>
+                    `);
+            });
+        },
+        error: function(error) {
+            console.error('Erro ao buscar protocolos:', error);
+        }
+    });
+});
+</script>
 
 <%- include('partials/footer.html') %>

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const categorias = require('../model/categorias');
-const categorias_protocolos = require('../model/categorias-protocolos');
+const categorias_protocolos = require('../model/categorias_protocolos');
 
 // Rota para a página de categorias
 router.get('/categorias', (req, res) => {

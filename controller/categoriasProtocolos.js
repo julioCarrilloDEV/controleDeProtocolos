@@ -1,5 +1,6 @@
+alert('AQUI ESTÁ SENDO CHAMADO?');
+
 $(document).ready(function(){
-    const idCategoria = 1; // Define idCategoria with an appropriate value
     alert('AQUI ESTÁ SENDO CHAMADO?');
     console.log('ISSO AQUI ESTÁ SENDO CHAMADO?? idCategoria:', idCategoria); 
     
@@ -7,10 +8,10 @@ $(document).ready(function(){
         url: `/api/categorias/protocolos/${idCategoria}`,
         method: 'GET',
         success: function(data) {
-            const protocolosList = $('#lista-protocolosCategoria');
+            const protocolosList = $('#lista-categoriasProtocolos');
             data.forEach(protocolo => {
                 protocolosList.append(`
-                    <li>${protocolo.descricao}</li>
+                    <a class="list-group-item list-group-item-action">${protocolo.descricao}</a>
                     `);
             });
         },

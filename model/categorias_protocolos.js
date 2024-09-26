@@ -4,11 +4,11 @@ module.exports = (req, res) => {
     if (!req.session.user) {
         return res.status(401).send('Você precisa fazer login para acessar esta página.');
     }
-    console.log('ISSO AQUI ESTÁ SENDO CHAMADO?? idCategoria:', req.params.idCategoria); // Corrigido para acessar diretamente req.params
     const idCategoria = req.params.idCategoria; // Corrigido para acessar diretamente req.params
 
     const query = `
         SELECT * FROM protocolo
+        INNER JOIN categoria ON categoriaID = idCategoria
         WHERE categoriaID = :idCategoria;
     `;
 

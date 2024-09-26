@@ -9,7 +9,10 @@ module.exports = (req, res) => {
     const {id} = req.session.user;
 
     const query = `
-        SELECT * FROM protocolo INNER JOIN usuario_protocolo ON idProtocolo = protocoloID INNER JOIN categoria ON categoriaID = idCategoria WHERE usuarioID = ${id};    `;
+        SELECT * FROM protocolo 
+        INNER JOIN usuario_protocolo ON idProtocolo = protocoloID 
+        INNER JOIN categoria ON categoriaID = idCategoria 
+        WHERE usuarioID = ${id};    `;
 
     sequelize.query(query)
         .then(protocolos => {
