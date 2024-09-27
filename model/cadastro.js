@@ -1,15 +1,15 @@
 const { sequelize } = require('./conn');
 
 module.exports = (req, res) => {
-    const { nome, usuario, senha, conf_senha} = req.body;
+    const { nome, usuario, email, senha, conf_senha} = req.body;
     const tipoUsuario = 'comum';
     if (senha !== conf_senha) {
         return res.status(400).json({ error: 'As senhas não coincidem' });
     }
     // Query SQL para inserir um novo usuário
     const query = `
-        INSERT INTO usuario (nome, usuario, senha, tipoUsuario)
-        VALUES ('${nome}', '${usuario}', '${senha}', '${tipoUsuario}');
+        INSERT INTO usuario (nome, usuario, email, senha, tipoUsuario)
+        VALUES ('${nome}', '${usuario}','${email}', '${senha}', '${tipoUsuario}');
     `;
 
     // Executa a query no banco de dados

@@ -1,0 +1,21 @@
+<%- include('partials/head.html') %>
+<%- include('partials/header.html') %>
+
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col">
+            <h1>Seja bem-vindo, <%= nome %></h1>
+            <p>ID: <%= id %></p>
+            <p>Usuário: <%= usuario %></p>
+            <p>Email: <%= email %></p>
+            <p>Tipo de usuário: <%= tipoUsuario %></p>
+            <div class="mt-4">
+                <a href="/perfil/editar" class="btn btn-primary">Editar</a>
+                <a href="/perfil/alterar-senha" class="btn btn-secondary">Alterar Senha</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include ('partials/footer.html') %>
