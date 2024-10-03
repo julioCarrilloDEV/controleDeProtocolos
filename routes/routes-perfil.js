@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const perfilModel = require('../model/perfilModel');
+const edit_perfilModel = require('../model/edit_perfilModel');
+const edit_senhaModel = require('../model/edit_senhaModel');
 
 router.get('/perfil', (req, res) => {
     if (req.session.user) {
@@ -16,9 +17,17 @@ router.get('/perfil', (req, res) => {
     }
 });
 
-router.get('/api/perfil', (req, res) => {
+router.post('/editar/perfil', (req, res) => {
     if (req.session.user) {
-        perfilModel(req, res);
+        edit_perfilModel(req, res);
+    } else {
+        res.status(401).send('Você precisa fazer login para acessar esta página.');
+    }
+});
+
+router.post('/editar/senha', (req, res) => {
+    if (req.session.user) {
+        edit_senhaModel(req, res);
     } else {
         res.status(401).send('Você precisa fazer login para acessar esta página.');
     }
