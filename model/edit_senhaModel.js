@@ -15,23 +15,23 @@ module.exports = async (req, res) => {
         `;
 
         const result = await sequelize.query(queryBuscarSenha, { type: sequelize.QueryTypes.SELECT });
-        console.log('Resultado da consulta:', result);
 
         if (result.length === 0) {
             return res.status(404).json({ error: 'Usuário não encontrado' });
         }
 
         const senhaUsuario = result[0].senha;
-        console.log('Senha usuario:', senhaUsuario);
 
         // Verificar se a senha atual está correta
         if (senhaAtual !== senhaUsuario) {
-            return res.status(400).json({ error: 'Senha atual incorreta' });
+            // return res.status(400).json({ error: 'Senha atual incorreta' });
+            return res.redirect('/perfil?status=wrong_password');
         }
 
         // Verificar se a nova senha coincide com a confirmação
         if (novaSenha !== confirmarSenha) {
-            return res.status(400).json({ error: 'A nova senha e a confirmação não coincidem' });
+            // return res.status(400).json({ error: 'A nova senha e a confirmação não coincidem' });
+            return res.redirect('/perfil?status=password_mismatch');
         }
 
         // Atualizar a senha no banco de dados
@@ -42,14 +42,13 @@ module.exports = async (req, res) => {
         `;
 
         await sequelize.query(queryAtualizarSenha);
-        console.log('Senha atualizada com sucesso'+ novaSenha);
         // Atualizar a sessão com a nova senha
         req.session.user.senha = novaSenha;
 
         console.log('Sessão após a atualização:', req.session);
-        res.redirect('/perfil');
+        res.redirect('/perfil?status=successPw');
     } catch (err) {
         console.error('Erro ao atualizar senha:', err);
-        res.status(500).json({ error: 'Erro interno do servidor' });
+        res.redirect('/perfil?status=errorPw');
     }
 }

@@ -20,11 +20,10 @@ module.exports = (req, res) => {
             req.session.user.email = email;
             req.session.user.nome = nome;
 
-            console.log('Sessão após a atualização:', req.session);
-            res.redirect('/perfil');
+            res.redirect('/perfil?status=successEdit');
         })
         .catch(err => {
-            console.error('Erro ao atualizar perfil:', err);
-            res.status(500).json({ error: 'Erro interno do servidor' });
+            // console.error('Erro ao atualizar perfil:', err);
+            res.redirect('/perfil?status=errorEdit');
         });
 }
