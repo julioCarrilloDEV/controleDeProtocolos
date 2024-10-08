@@ -15,6 +15,15 @@ app.use(session({
     saveUninitialized: true, // Não salva sessões vazias (sem dados)
     cookie: { secure: false } // Permite o uso de cookies via HTTP
   }));
+// Middleware para adicionar o nome do usuário às variáveis de template
+app.use((req, res, next) => {
+    if (req.session.user) {
+        res.locals.nome = req.session.user.nome;
+    } else {
+        res.locals.nome = null;
+    }
+    next();
+});
 
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
