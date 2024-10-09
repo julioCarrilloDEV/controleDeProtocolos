@@ -8,7 +8,7 @@ $(document).ready(function(){
                 favoritosTable.append(`
                     <tr>
                         <td>${favorito.descricao}</td>
-                        <td></td>
+                        <td class="text-center"><i class="bi bi-star-fill"></i></td>
                     </tr>
                     `); 
             });

@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const protocolos = require('../model/protocolos');
+const protocolosFavoritos = require('../model/protocolosFavoritos');
+const favoritarProtocolos = require('../model/favoritarProtocolos');
+const desfavoritarProtocolos = require('../model/desfavoritarProtocolos');
 
 // Rota para a página de protocolos
 router.get('/protocolos', (req, res) => {
@@ -10,10 +13,35 @@ router.get('/protocolos', (req, res) => {
         res.status(401).send('Você precisa fazer login para acessar esta página.');
     }
 });
+
 // Rota para buscar protocolos via AJAX com validação de sessão
 router.get('/api/protocolos', (req, res) => {
     if (req.session.user) {
         protocolos(req, res);
+    } else {
+        res.status(401).send('Você precisa fazer login para acessar esta página.');
+    }
+});
+
+router.get('/api/protocolos/protocolosFavoritos', (req, res) => {
+    if (req.session.user) {
+        protocolosFavoritos(req, res);
+    } else {
+        res.status(401).send('Você precisa fazer login para acessar esta página.');
+    }
+});
+
+router.post('/api/protocolos/favoritar', (req, res) => {
+    if (req.session.user) {
+        favoritarProtocolos(req, res);
+    } else {
+        res.status(401).send('Você precisa fazer login para acessar esta página.');
+    }
+});
+
+router.post('/api/protocolos/desfavoritar', (req, res) => {
+    if (req.session.user) {
+        desfavoritarProtocolos(req, res);
     } else {
         res.status(401).send('Você precisa fazer login para acessar esta página.');
     }
