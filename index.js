@@ -19,17 +19,22 @@ app.use(session({
 app.use((req, res, next) => {
     if (req.session.user) {
         res.locals.nome = req.session.user.nome;
+        res.locals.foto = req.session.user.foto;
     } else {
         res.locals.nome = null;
+        res.locals.foto = null;
     }
     next();
 });
+
+
 
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'controller')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 //para trabalhar com requisições post em node, é necessário o bodyParser
 app.use(bodyParser.json());

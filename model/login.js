@@ -6,7 +6,7 @@ module.exports = (req, res) => {
     
     // Query SQL para buscar usuário correspondente
     const query = `
-        SELECT id, usuario, email, nome, tipoUsuario, senha FROM usuario
+        SELECT id, usuario, email, nome, foto, tipoUsuario, senha FROM usuario
         WHERE usuario = '${usuario}' AND senha = '${senha}';
     `;
 
@@ -21,6 +21,7 @@ module.exports = (req, res) => {
                         usuario: user.usuario,
                         nome: user.nome,
                         email: user.email,
+                        foto: user.foto,
                         tipoUsuario: user.tipoUsuario
                     };
                     

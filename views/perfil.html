@@ -6,6 +6,11 @@
     <div class="row">
         <div class="col">
             <h1>Seja bem-vindo, <%= nome %></h1>
+           <!-- Campo para exibir a foto do usuário -->
+           <img src="/uploads/<%= foto %>" alt="Foto de perfil" class="img-thumbnail" style="width: 200px; height: 200px;">
+           <button class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#modalAlterarFoto">Alterar Foto</button>
+
+
             <p><b>ID:</b> <%= id %></p>
             <p><b>Usuário:</b> <%= usuario %></p>
             <p><b>Email:</b> <%= email %></p>
@@ -18,6 +23,32 @@
     </div>
 </div>
 
+
+<!-- Modal para alteração da foto -->
+<div class="modal fade" id="modalAlterarFoto" tabindex="-1" role="dialog" aria-labelledby="modalAlterarFotoLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form id="formAlterarFoto" action="perfil/upload/foto" method="POST" enctype="multipart/form-data">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalAlterarFotoLabel">Alterar Foto</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="foto">Escolha uma nova foto</label>
+                        <input type="file" class="form-control" id="foto" name="foto" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 <!-- Modal para edição dos dados -->
 <div class="modal fade" id="modalEditarPerfil" tabindex="-1" role="dialog" aria-labelledby="modalEditarPerfilLabel" aria-hidden="true">
