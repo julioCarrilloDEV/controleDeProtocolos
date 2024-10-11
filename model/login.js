@@ -29,6 +29,7 @@ module.exports = (req, res) => {
                         id: user.id,
                         nome: user.nome,
                         email: user.email,
+                        foto: user.foto,
                         tipoUsuario: user.tipoUsuario,
                         usuario: user.usuario
                     });

@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const protocolos = require('../model/protocolos');
+const upload = require('../multerConfig');
 const protocolosFavoritos = require('../model/protocolosFavoritos');
 const favoritarProtocolos = require('../model/favoritarProtocolos');
 const desfavoritarProtocolos = require('../model/desfavoritarProtocolos');
+const anexoProtocolo = require('../model/anexoProtocolo');
 
 // Rota para a página de protocolos
 router.get('/protocolos', (req, res) => {
@@ -45,6 +47,15 @@ router.post('/api/protocolos/desfavoritar', (req, res) => {
     } else {
         res.status(401).send('Você precisa fazer login para acessar esta página.');
     }
+});
+
+router.post('/api/protocolos/anexo', upload.single('anexo'), (req, res) => {
+    anexoProtocolo(req, res);
+    // if (req.session.user) {
+    //     anexoProtocolo(req, res);
+    // } else {
+    //     res.status(401).send('Você precisa fazer login para acessar esta página.');
+    // }
 });
 
 module.exports = router;
