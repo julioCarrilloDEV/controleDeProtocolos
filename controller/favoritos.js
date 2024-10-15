@@ -6,9 +6,10 @@ $(document).ready(function(){
         success: function(data){
             const favoritosTable = $('#tabela-favoritos');
             data.forEach(favorito => {
+                const anexoUrl = `/uploads/${favorito.anexo}`;
                 favoritosTable.append(`
                     <tr>
-                        <td>${favorito.descricao}</td>
+                        <td><a href="${anexoUrl}" >${favorito.descricao}</a></td>
                         <td class="text-center">
                             <i class="bi bi-star-fill" data-id="${favorito.idProtocolo}" data-favorito="true"></i>
                         </td>

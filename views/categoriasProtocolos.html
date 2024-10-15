@@ -37,8 +37,9 @@
             $('#nomeCat').text(data[0].nomeCategoria);
             const protocolosList = $('#lista-categoriasProtocolos');
             data.forEach(protocolo => {
+                const anexoUrl = `/uploads/${protocolo.anexo}`;
                 protocolosList.append(`
-                    <a class="list-group-item list-group-item-action">${protocolo.descricao}</a>
+                    <a href="${anexoUrl}" class="list-group-item list-group-item-action">${protocolo.descricao}</a>
                     `);
             });
         },

@@ -15,8 +15,8 @@ $(document).ready(function(){
                         const anexoUrl = `/uploads/${protocolo.anexo}`;
                         $('#tabela-protocolos').append(`
                             <tr>
-                                <!-- <td><a href="${anexoUrl}" >${protocolo.descricao}</a></td> -->
-                                 <td><a href="#" class="view-pdf" data-url="${anexoUrl}">${protocolo.descricao}</a></td>
+                                <td><a href="${anexoUrl}" >${protocolo.descricao}</a></td> 
+                                <!-- <td><a href="#" class="view-pdf" data-url="${anexoUrl}">${protocolo.descricao}</a></td> -->
                                 <td>${protocolo.nomeCategoria}</td>
                                 <td class="text-center">
                                     <i class="bi ${favoritoClass}" data-id="${protocolo.idProtocolo}" data-favorito="${isFavorito}"></i>
@@ -25,13 +25,13 @@ $(document).ready(function(){
                         `);
                     });
 
-                     // Adicionar evento de clique para os links de visualização de PDF
-                     $('#tabela-protocolos').on('click', '.view-pdf', function(e){
-                        e.preventDefault();
-                        const pdfUrl = $(this).data('url');
-                        $('#pdfIframe').attr('src', pdfUrl);
-                        $('#pdfModal').modal('show');
-                    });
+                    //  // Adicionar evento de clique para os links de visualização de PDF
+                    //  $('#tabela-protocolos').on('click', '.view-pdf', function(e){
+                    //     e.preventDefault();
+                    //     const pdfUrl = $(this).data('url');
+                    //     $('#pdfIframe').attr('src', pdfUrl);
+                    //     $('#pdfModal').modal('show');
+                    // });
 
                     // Adicionar evento de clique para os ícones de favorito
                     $('#tabela-protocolos').on('click', 'i[data-id]', function(){
