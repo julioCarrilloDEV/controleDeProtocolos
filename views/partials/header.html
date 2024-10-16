@@ -53,6 +53,26 @@
                     Favoritos
                 </a>
             </li>
+            <% if (tipoUsuario === 'admin') { %>
+                <li>
+                    <a href="/admin/categorias" class="nav-link text-white" id="btnCategorias">
+                        <i class="bi bi-grid-1x2 me-1"></i>
+                        Gerenciar categorias
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin/protocolos" class="nav-link text-white" id="btnCategorias">
+                        <i class="bi bi-journal-check me-1"></i>
+                        Gerenciar protocolos
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin/usuarios" class="nav-link text-white" id="btnCategorias">
+                        <i class="bi bi-person-gear me-1"></i>
+                        Gerenciar usuários
+                    </a>
+                </li>
+            <% } %>
 
         </ul>
         <hr>

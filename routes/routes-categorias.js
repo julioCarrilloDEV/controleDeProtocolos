@@ -21,7 +21,6 @@ router.get('/api/categorias', (req, res) => {
     }
 });
 
-
 // Rota para acessar protocolos associados a uma categoria
 router.get('/categorias/protocolos/:idCategoria', (req, res) => {
     if (req.session.user) {
@@ -39,4 +38,5 @@ router.get('/api/categorias/protocolos/:idCategoria', (req, res) => {
         res.status(401).send('Você foi desconectado.');
     }
 });
+
 module.exports = router;

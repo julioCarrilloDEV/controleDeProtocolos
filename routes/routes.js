@@ -6,6 +6,7 @@ const categoriasRoutes = require('./routes-categorias');
 const protocolosRoutes = require('./routes-protocolos');
 const favoritosRoutes = require('./routes-favoritos');
 const perfilRoutes = require('./routes-perfil');
+const adminRoutes = require('./routes-admin');
 
 
 // rota protegida que verifica a sessão
@@ -27,6 +28,7 @@ router.use('/', categoriasRoutes)
 router.use('/', protocolosRoutes)
 router.use('/', favoritosRoutes)
 router.use('/', perfilRoutes)
+router.use('/', adminRoutes)
 
 
 

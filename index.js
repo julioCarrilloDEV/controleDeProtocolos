@@ -20,9 +20,11 @@ app.use((req, res, next) => {
     if (req.session.user) {
         res.locals.nome = req.session.user.nome;
         res.locals.foto = req.session.user.foto;
+        res.locals.tipoUsuario = req.session.user.tipoUsuario;
     } else {
         res.locals.nome = null;
         res.locals.foto = null;
+        res.locals.tipoUsuario = null;
     }
     next();
 });
