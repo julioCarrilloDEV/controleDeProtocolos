@@ -3,9 +3,14 @@
 
 <div class="container mt-5">
     <h1>Gerenciar Categorias</h1>
-    <div class="text-right mb-3">
-        <button class="btn btn-primary" data-toggle="modal" data-target="#createModal">Incluir nova categoria</button>
+    <div class="row">
+        <div class="col-7">
+        </div>
+        <div class="mb-3 col-5">
+            <button class="btn btn-primary justify-content-end" data-bs-toggle="modal" data-bs-target="#createModal"> <i class="bi bi-plus-circle"></i> Adicionar categoria</button>
+        </div>
     </div>
+    
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -13,82 +18,8 @@
                 <th class="text-center">Ações</th>
             </tr>
         </thead>
-        <tbody>
-                <tr>
-                    <td>nome da categoria</td>
-                    <td class="text-center">
-                        <button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editModal">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                        <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteModal">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                        <button class="btn btn-sm btn-info" data-toggle="modal" data-target="#associateModal">
-                            <i class="fas fa-link"></i>
-                        </button>
-                    </td>
-                </tr>
-
-                <!-- Modal para Editar Categoria -->
-                <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="editModalLabel">Editar Categoria</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <form action="/admin/categorias/_method=PUT" method="POST">
-                                    <div class="form-group">
-                                        <label for="nome">Nome da Categoria</label>
-                                        <input type="text" class="form-control" name="nome" value="" required>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary">Salvar</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Modal para Remover Categoria -->
-                <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="deleteModalLabel">Remover Categoria</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <p>Tem certeza que deseja remover a categoria ""?</p>
-                                <form action="/admin/categorias/_method=DELETE" method="POST">
-                                    <button type="submit" class="btn btn-danger">Remover</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Modal para Associar Categoria -->
-                <div class="modal fade" id="associateModal" tabindex="-1" role="dialog" aria-labelledby="associateModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="associateModalLabel">Associar Categoria</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <!-- Conteúdo do modal de associação -->
-                                <p>Funcionalidade de associação ainda não implementada.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <tbody id="categoriaTableBody">
+            <!-- As categorias serão carregadas aqui via AJAX -->
         </tbody>
     </table>
 </div>
@@ -99,12 +30,12 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="createModalLabel">Incluir Nova Categoria</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form action="/admin/categorias" method="POST">
+                <form id="createCategoriaForm">
                     <div class="form-group">
                         <label for="nome">Nome da Categoria</label>
                         <input type="text" class="form-control" name="nome" required>
@@ -116,6 +47,66 @@
     </div>
 </div>
 
+ <!-- Modal para Editar Categoria -->
+ <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Editar Categoria</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="editCategoriaForm">
+                    <div class="form-group">
+                        <label for="nome">Nome da Categoria</label>
+                        <input type="text" class="form-control" name="nome" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
+<!-- Modal para Remover Categoria -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Remover Categoria</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Tem certeza que deseja remover a categoria?</p>
+                <form id="deleteCategoriaForm">
+                    <button type="submit" class="btn btn-danger">Remover</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
+ <!-- Modal para Associar Categoria -->
+ <div class="modal fade" id="associateModal" tabindex="-1" role="dialog" aria-labelledby="associateModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="associateModalLabel">Associar Categoria</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Conteúdo do modal de associação -->
+                <p>Funcionalidade de associação ainda não implementada.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/admin/gerenciarCategorias.js"></script>
 <%- include('../partials/footer.html') %>
