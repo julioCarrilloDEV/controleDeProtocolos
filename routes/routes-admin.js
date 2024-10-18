@@ -9,4 +9,7 @@ router.get('/admin/categorias', authMiddleware, (req, res) => {
 
 router.get('/api/admin/categorias', authMiddleware, categoriasAdmin.getCategorias);
 
+router.post('/admin/categorias', authMiddleware, categoriasAdmin.addCategoria);
+router.post('/admin/edit/categorias', authMiddleware, categoriasAdmin.editCategoria);
+
 module.exports = router;

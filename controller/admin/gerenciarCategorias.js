@@ -1,4 +1,7 @@
 $(document).ready(function() {
+    // Carregar as categorias ao carregar a página
+    loadCategorias();
+
     // Função para carregar as categorias via AJAX
     function loadCategorias() {
         $.ajax({
@@ -11,14 +14,14 @@ $(document).ready(function() {
                         <tr>
                             <td>${categoria.nomeCategoria}</td>
                             <td class="text-center">
+                                <button class="btn btn-sm btn-info associate-btn" data-id="${categoria.idCategoria}" data-nome="${categoria.nomeCategoria}">
+                                    <i class="bi bi-link-45deg"></i>
+                                </button>
                                 <button class="btn btn-sm btn-warning edit-btn" data-id="${categoria.idCategoria}" data-nome="${categoria.nomeCategoria}">
-                                    <i class="fas fa-edit"></i>
+                                    <i class="bi bi-pencil"></i>
                                 </button>
                                 <button class="btn btn-sm btn-danger delete-btn" data-id="${categoria.idCategoria}" data-nome="${categoria.nomeCategoria}">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                                <button class="btn btn-sm btn-info associate-btn" data-id="${categoria.idCategoria}" data-nome="${categoria.nomeCategoria}">
-                                    <i class="fas fa-link"></i>
+                                    <i class="bi bi-trash"></i>
                                 </button>
                             </td>
                         </tr>
@@ -28,47 +31,15 @@ $(document).ready(function() {
         });
     }
 
-    // Carregar as categorias ao carregar a página
-    loadCategorias();
-
-    // Função para criar uma nova categoria
-    $('#createCategoriaForm').submit(function(e) {
-        e.preventDefault();
-        const formData = $(this).serialize();
-        $.ajax({
-            url: '/admin/categorias',
-            method: 'POST',
-            data: formData,
-            success: function() {
-                $('#createModal').modal('hide');
-                loadCategorias();
-            }
-        });
-    });
-
     // Função para editar uma categoria
     $(document).on('click', '.edit-btn', function() {
         const categoriaId = $(this).data('id');
         const categoriaNome = $(this).data('nome');
-        $('#editCategoriaForm').attr('data-id', categoriaId);
-        $('#editCategoriaForm input[name="nome"]').val(categoriaNome);
+        $('#inputIdCat').val(categoriaId);
+        $('#inputNomeCat').val(categoriaNome);
         $('#editModal').modal('show');
     });
 
-    $('#editCategoriaForm').submit(function(e) {
-        e.preventDefault();
-        const categoriaId = $(this).attr('data-id');
-        const formData = $(this).serialize();
-        $.ajax({
-            url: `/admin/categorias/${categoriaId}`,
-            method: 'PUT',
-            data: formData,
-            success: function() {
-                $('#editModal').modal('hide');
-                loadCategorias();
-            }
-        });
-    });
 
     // Função para remover uma categoria
     $(document).on('click', '.delete-btn', function() {
