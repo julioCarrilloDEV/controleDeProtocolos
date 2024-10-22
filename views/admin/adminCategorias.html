@@ -82,8 +82,9 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p>Tem certeza que deseja remover a categoria?</p>
-                <form id="deleteCategoriaForm">
+                <p></p>
+                <form id="deleteCategoriaForm" action="/admin/delete/categorias" method="POST">
+                    <input type="hidden" id="inputIdCatDelete" name="idCategoria">
                     <button type="submit" class="btn btn-danger">Remover</button>
                 </form>
             </div>

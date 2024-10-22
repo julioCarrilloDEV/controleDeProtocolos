@@ -11,5 +11,7 @@ router.get('/api/admin/categorias', authMiddleware, categoriasAdmin.getCategoria
 
 router.post('/admin/categorias', authMiddleware, categoriasAdmin.addCategoria);
 router.post('/admin/edit/categorias', authMiddleware, categoriasAdmin.editCategoria);
+router.post('/admin/delete/categorias', authMiddleware, categoriasAdmin.deleteCategoria);
+
 
 module.exports = router;

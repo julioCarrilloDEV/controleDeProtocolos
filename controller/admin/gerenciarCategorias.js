@@ -40,28 +40,15 @@ $(document).ready(function() {
         $('#editModal').modal('show');
     });
 
-
-    // Função para remover uma categoria
+    // Função para deletar uma categoria
     $(document).on('click', '.delete-btn', function() {
         const categoriaId = $(this).data('id');
         const categoriaNome = $(this).data('nome');
-        $('#deleteCategoriaForm').attr('data-id', categoriaId);
+        $('#inputIdCatDelete').val(categoriaId);
         $('#deleteModal p').text(`Tem certeza que deseja remover a categoria "${categoriaNome}"?`);
         $('#deleteModal').modal('show');
     });
 
-    $('#deleteCategoriaForm').submit(function(e) {
-        e.preventDefault();
-        const categoriaId = $(this).attr('data-id');
-        $.ajax({
-            url: `/admin/categorias/${categoriaId}`,
-            method: 'DELETE',
-            success: function() {
-                $('#deleteModal').modal('hide');
-                loadCategorias();
-            }
-        });
-    });
 
     // Função para associar uma categoria
     $(document).on('click', '.associate-btn', function() {

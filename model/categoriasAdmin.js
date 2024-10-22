@@ -47,5 +47,21 @@ module.exports = {
                 console.error('Erro ao editar categoria:', err);
                 res.status(500).send('Erro ao editar categoria');
             });
-    }  
+    }, 
+    deleteCategoria: (req, res) => {
+        const idCategoria = req.body.idCategoria;
+        console.log('Valor de id'+ idCategoria);
+        const query = `
+            DELETE FROM categoria
+            WHERE idCategoria = ${idCategoria};
+        `;
+        sequelize.query(query)
+            .then(() => {
+                res.redirect('/admin/categorias?status=successCatDelete');
+            })
+            .catch(err => {
+                console.error('Erro ao deletar categoria:', err);
+                res.status(500).send('Erro ao deletar categoria');
+            });
+    }
 }
