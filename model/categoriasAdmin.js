@@ -63,5 +63,18 @@ module.exports = {
                 console.error('Erro ao deletar categoria:', err);
                 res.status(500).send('Erro ao deletar categoria');
             });
-    }
+    },
+    getProtocolos: (req, res) => {
+        const query = `
+            SELECT * FROM protocolo;
+        `;
+        sequelize.query(query)
+            .then(result => {
+                res.json(result[0]);
+            })
+            .catch(err => {
+                console.error('Erro ao buscar protocolos:', err);
+                res.status(500).send('Erro ao buscar protocolos');
+            });
+        }
 }

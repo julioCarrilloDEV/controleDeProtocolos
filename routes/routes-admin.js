@@ -8,6 +8,7 @@ router.get('/admin/categorias', authMiddleware, (req, res) => {
 });
 
 router.get('/api/admin/categorias', authMiddleware, categoriasAdmin.getCategorias);
+router.get('/api/admin/protocolos', authMiddleware, categoriasAdmin.getProtocolos);
 
 router.post('/admin/categorias', authMiddleware, categoriasAdmin.addCategoria);
 router.post('/admin/edit/categorias', authMiddleware, categoriasAdmin.editCategoria);

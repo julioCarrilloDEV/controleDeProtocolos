@@ -50,11 +50,43 @@ $(document).ready(function() {
     });
 
 
-    // Função para associar uma categoria
+    // Função para associar protocolos a uma categoria
     $(document).on('click', '.associate-btn', function() {
         const categoriaId = $(this).data('id');
         const categoriaNome = $(this).data('nome');
-        // Aqui você pode adicionar lógica para preencher o modal de associação
+        $('#associateModalLabel').text(`Associar Protocolos à Categoria: ${categoriaNome}`);
+        $('#associateProtocolosForm').attr('data-id', categoriaId);
+        
+        
+        // Carregar os protocolos e as associações existentes
+        $.ajax({
+            url: `/api/admin/protocolos`,
+            method: 'GET',
+            success: function(protocolos) {
+                $('#protocolosList').empty();
+                protocolos.forEach(function(protocolo) {
+                    $('#protocolosList').append(`
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="${protocolo.idProtocolo}" id="protocolo-${protocolo.idProtocolo}">
+                            <label class="form-check-label" for="protocolo-${protocolo.idProtocolo}">
+                                ${protocolo.descricao}
+                            </label>
+                        </div>
+                    `);
+                });
+                // Carregar as associações existentes
+                $.ajax({
+                    url: `/api/categorias/protocolos/${categoriaId}`,
+                    method: 'GET',
+                    success: function(associacoes) {
+                        associacoes.forEach(function(protocolo) {
+                            $(`#protocolo-${protocolo.idProtocolo}`).prop('checked', true);
+                        });
+                    }
+                });
+            }
+        });
+
         $('#associateModal').modal('show');
     });
 });
