@@ -76,5 +76,34 @@ module.exports = {
                 console.error('Erro ao buscar protocolos:', err);
                 res.status(500).send('Erro ao buscar protocolos');
             });
-        }
+    },
+    associateProtocolos: (req, res) => {
+        const idCategoria = req.params.idCategoria;
+        const protocolosIds = req.body.protocolosIds;
+
+        // Atualizar protocolos para associar à categoria
+        const updateQueries = protocolosIds.map(idProtocolo => `
+            UPDATE protocolo
+            SET categoriaID = ${idCategoria}
+            WHERE idProtocolo = ${idProtocolo};
+        `);
+
+        // Atualizar protocolos para desassociar da categoria
+        const desassociateQuery = `
+            UPDATE protocolo
+            SET categoriaID = NULL
+            WHERE categoriaID = ${idCategoria}
+            AND idProtocolo NOT IN (${protocolosIds.join(', ')});
+        `;
+        
+        Promise.all(updateQueries.map(query => sequelize.query(query)))
+            .then(() => sequelize.query(desassociateQuery))
+            .then(() => {
+                res.status(200).send('Associações atualizadas com sucesso');
+            })
+            .catch(err => {
+                console.error('Erro ao associar protocolos à categoria:', err);
+                res.status(500).send('Erro ao associar protocolos à categoria');
+            });
+    }
 }

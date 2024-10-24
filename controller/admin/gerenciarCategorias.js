@@ -89,4 +89,28 @@ $(document).ready(function() {
 
         $('#associateModal').modal('show');
     });
+
+
+    // Função para salvar as associações
+    $('#associateProtocolosForm').submit(function(e) {
+        e.preventDefault();
+        const idCategoria = $(this).attr('data-id');
+        const protocolosIds = [];
+        $('#protocolosList input:checked').each(function() {
+            //O campo check está amazenando o valor do id já
+            protocolosIds.push($(this).val());
+        });
+        
+        $.ajax({
+            url: `/api/admin/categorias/protocolos/${idCategoria}`,
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({protocolosIds}),
+            success: function() {
+                $('#associateModal').modal('hide');
+                alert('Associações atualizadas com sucesso');
+            }
+        });
+    });
+
 });
