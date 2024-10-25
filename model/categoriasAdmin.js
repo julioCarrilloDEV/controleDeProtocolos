@@ -82,6 +82,7 @@ module.exports = {
         const protocolosIds = req.body.protocolosIds;
 
         // Atualizar protocolos para associar à categoria
+        //O map está percorrendo o array de protocolosIds e para cada id de protocolo, está criando uma query de update que associa o protocolo à categoria
         const updateQueries = protocolosIds.map(idProtocolo => `
             UPDATE protocolo
             SET categoriaID = ${idCategoria}
@@ -95,7 +96,7 @@ module.exports = {
             WHERE categoriaID = ${idCategoria}
             AND idProtocolo NOT IN (${protocolosIds.join(', ')});
         `;
-        
+        //Recebe um array de promises e só continua depois que todas forem resolvidas, isto é, todas as queries de update forem executadas
         Promise.all(updateQueries.map(query => sequelize.query(query)))
             .then(() => sequelize.query(desassociateQuery))
             .then(() => {
