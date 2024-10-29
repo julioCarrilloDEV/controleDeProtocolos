@@ -15,5 +15,36 @@ module.exports = {
             console.error('Erro ao buscar os protocolos', err);
             res.status(500).send('Erro ao buscar protocoolos');
         });
+    },
+    addProtocolo: (req,res) => {
+        const descricao = req.body.descricao;
+
+        const query =` INSERT INTO protocolo (descricao) VALUES ('${descricao}');`;
+
+        sequelize.query(query)
+        .then(() => {
+            res.redirect('/admin/protocolos?status=successAdd');
+        })
+        .catch(err => {
+            console.error('Erro ao adicionar protocolo', err);
+            res.status(500).send('Erro ao adicionar protocolo');
+        })
+    },
+    uploadProtocolo:(req,res) => {
+        const idProtocolo = req.body.idProtocolo;
+        const anexo = req.file.filename;
+        const query = `
+            UPDATE protocolo
+            SET anexo = '${anexo}'
+            WHERE idProtocolo = ${idProtocolo};
+        `;
+        sequelize.query(query)
+            .then(() => {
+                res.json({ success: true, message: 'Arquivo de protocolo salvo com sucesso!' });
+            })
+            .catch(err => {
+                console.error('Erro ao salvar arquivo de protocolo:', err);
+                res.status(500).json({ error: 'Erro interno do servidor' });
+            });
     }
 }

@@ -25,6 +25,51 @@
     </table>
 </div>
 
+<!-- Modal para adicionar um novo protocolo -->
+<div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createModalLabel">Incluir Novo Protocolo</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="createProtocoloForm" action="/admin/protocolos" method="POST">
+                    <div class="form-group">
+                        <label for="nome">Nome do Protocolo</label>
+                        <input type="text" class="form-control" name="descricao" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-2">Salvar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para realizar o upload do arquivo do protocolo -->
+<div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form id="uploadProtocoloForm" action="/admin/protocolos/upload" method="POST" enctype="multipart/form-data">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="uploadModalLabel"></h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="idProtocolo" id="idProtocolo" value="">
+                    <div class="form-group">
+                        <input type="file" class="form-control-file" name="anexo" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-2">Enviar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 
 <script src="/admin/gerenciarProtocolos.js"></script>
