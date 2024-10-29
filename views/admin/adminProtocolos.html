@@ -71,6 +71,50 @@
     </div>
 </div>
 
+<!-- Modal para realizar a edição do protocolo -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form id="editProtocoloForm" action="/admin/protocolos/edit" method="POST">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel">Editar Protocolo</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="idProtocolo" id="idProtocoloEdit" value="">
+                    <div class="form-group">
+                        <label for="nome">Nome do Protocolo</label>
+                        <input type="text" class="form-control" name="descricao" id="descricaoEdit" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-2">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para realizar a exclusão do protocolo -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form id="deleteProtocoloForm" action="/admin/protocolos/delete" method="POST">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Excluir Protocolo</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="idProtocolo" id="idProtocoloDelete" value="">
+                    <button type="submit" class="btn btn-danger mt-2">Excluir</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 
 <script src="/admin/gerenciarProtocolos.js"></script>
 <%- include('../partials/footer.html') %>

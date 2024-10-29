@@ -1,6 +1,9 @@
 $(document).ready(function(){
     carregarProtocolos();
     uploadProtocolo();
+    editarProtocolo();
+    deletarProtocolo();
+
     function carregarProtocolos() {
         $.ajax({
             url: '/api/admin/protocolos',
@@ -39,7 +42,26 @@ $(document).ready(function(){
             $('#idProtocolo').val(idprotocolo);
             $('#uploadModal').modal('show');
         });
+    }
 
-        
+    function editarProtocolo(){
+        $('#protocoloTableBody').on('click', '.edit-btn', function(){
+            const idprotocolo = $(this).data('id');
+            const protocoloNome = $(this).data('nome');
+            $('#editModalLabel').text(`Editar protocolo ${protocoloNome}`);
+            $('#idProtocoloEdit').val(idprotocolo);
+            $('#descricaoEdit').val(protocoloNome);
+            $('#editModal').modal('show');
+        });
+    }
+
+    function deletarProtocolo(){
+        $('#protocoloTableBody').on('click', '.delete-btn', function(){
+            const idprotocolo = $(this).data('id');
+            const protocoloNome = $(this).data('nome');
+            $('#deleteModalLabel').text(`Tem certeza que deseja deletar o protocolo ${protocoloNome}?`);
+            $('#idProtocoloDelete').val(idprotocolo);
+            $('#deleteModal').modal('show');
+        });
     }
 })

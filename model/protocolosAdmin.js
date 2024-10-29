@@ -46,5 +46,37 @@ module.exports = {
                 console.error('Erro ao salvar arquivo de protocolo:', err);
                 res.status(500).json({ error: 'Erro interno do servidor' });
             });
+    },
+    editProtocolo:(req, res) => {
+        const idProtocolo = req.body.idProtocolo;
+        const descricao = req.body.descricao;
+        const query = `
+            UPDATE protocolo
+            SET descricao = '${descricao}'
+            WHERE idProtocolo = ${idProtocolo};
+        `;
+        sequelize.query(query)
+            .then(() => {
+                res.redirect('/admin/protocolos?status=successEdit');
+            })
+            .catch(err => {
+                console.error('Erro ao editar protocolo:', err);
+                res.status(500).send('Erro ao editar protocolo');
+            });
+    },
+    deleteProtocolo:(req,res) => {
+        const idProtocolo = req.body.idProtocolo;
+        const query = `
+            DELETE FROM protocolo
+            WHERE idProtocolo = ${idProtocolo};
+        `;
+        sequelize.query(query)
+            .then(() => {
+                res.redirect('/admin/protocolos?status=successDelete');
+            })
+            .catch(err => {
+                console.error('Erro ao deletar protocolo:', err);
+                res.status(500).send('Erro ao deletar protocolo');
+            });
     }
 }

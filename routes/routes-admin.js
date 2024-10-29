@@ -15,13 +15,12 @@ router.post('/admin/delete/categorias', authMiddleware, categoriasAdmin.deleteCa
 router.post('/api/admin/categorias/protocolos/:idCategoria', authMiddleware, categoriasAdmin.associateProtocolos);
 
 
-
-
 router.get('/admin/protocolos', authMiddleware, (req, res) => {
     res.render('admin/adminProtocolos');
 });
 router.get('/api/admin/protocolos', authMiddleware, protocolosAdmin.getProtocolos);
 router.post('/admin/protocolos', authMiddleware, protocolosAdmin.addProtocolo);
 router.post('/admin/protocolos/upload', authMiddleware, upload.single('anexo'), protocolosAdmin.uploadProtocolo);
-
+router.post('/admin/protocolos/edit', authMiddleware, protocolosAdmin.editProtocolo);
+router.post('/admin/protocolos/delete', authMiddleware, protocolosAdmin.deleteProtocolo);
 module.exports = router;
