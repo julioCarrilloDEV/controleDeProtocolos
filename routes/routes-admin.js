@@ -3,6 +3,7 @@ const router = express.Router();
 const upload = require('../multerConfig');
 const categoriasAdmin = require('../model/categoriasAdmin');
 const protocolosAdmin = require('../model/protocolosAdmin');
+const usuariosAdmin = require('../model/usuariosAdmin');
 const authMiddleware = require('./authMiddleware');
 
 router.get('/admin/categorias', authMiddleware, (req, res) => {
@@ -23,4 +24,10 @@ router.post('/admin/protocolos', authMiddleware, protocolosAdmin.addProtocolo);
 router.post('/admin/protocolos/upload', authMiddleware, upload.single('anexo'), protocolosAdmin.uploadProtocolo);
 router.post('/admin/protocolos/edit', authMiddleware, protocolosAdmin.editProtocolo);
 router.post('/admin/protocolos/delete', authMiddleware, protocolosAdmin.deleteProtocolo);
+
+router.get('/admin/usuarios', authMiddleware, (req, res) => {
+    res.render('admin/adminUsuarios');
+})
+router.get('/api/admin/usuarios', authMiddleware, usuariosAdmin.getUsuarios);
+router.post('/admin/usuarios', authMiddleware, usuariosAdmin.addUsuario);
 module.exports = router;
