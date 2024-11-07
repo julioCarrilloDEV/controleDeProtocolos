@@ -65,5 +65,62 @@
         </div>
     </div>
 </div>
+
+<!-- Modal para editar um usuário -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Editar Usuário</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editUserForm" action="/admin/usuarios/edit" method="POST">
+                    <input type="hidden" id="editId" name="id">
+                    <div class="mb-3">
+                        <label for="editNome" class="form-label">Nome do usuário</label>
+                        <input type="text" class="form-control" id="editNome" name="nome" placeholder="Fulano de tal... " required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editUsuario" class="form-label">Usuário</label>
+                        <input type="text" class="form-control" id="editUsuario" name="usuario" placeholder="exemplo.teste" required readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="editEmail" name="email" placeholder="email@teste.com" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editTipoUsuario" class="form-label">Tipo de Usuário</label>
+                        <select class="form-select" id="editTipoUsuario" name="tipoUsuario" required>
+                            <option value="comum">Comum</option>
+                            <option value="admin">Administrador</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para Remover um usuário -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Remover Usuário</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="deleteUserForm" action="/admin/usuarios/delete" method="POST">
+                    <input type="hidden" id="deleteId" name="id">
+                    <p>Tem certeza que deseja remover o usuário <span id="deleteNome"></span>?</p>
+                    <button type="submit" class="btn btn-danger">Remover</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="/admin/gerenciarUsuarios.js"></script>
 <%- include('../partials/footer.html') %>

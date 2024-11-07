@@ -1,5 +1,7 @@
 $(document).ready(function(){
     carregarUsuarios();
+    chamarEdicao();
+    chamarDelecao();
 
     function carregarUsuarios() {
         $.ajax({
@@ -28,6 +30,38 @@ $(document).ready(function(){
                     `);
                 });
             }
+        });
+    }
+
+    function chamarEdicao() {
+        $('#usuarioTableBody').on('click', '.edit-btn', function(){
+            const idUsuario = $(this).data('id');
+            $.ajax({
+                url: `/api/admin/usuarios/${idUsuario}`,
+                method: 'GET',
+                success: function(usuario) {
+                    // Preencher o formulário com os dados do usuário
+                    $('#editId').val(usuario.id);
+                    $('#editNome').val(usuario.nome);
+                    $('#editUsuario').val(usuario.usuario);
+                    $('#editEmail').val(usuario.email);
+                    $('#editTipoUsuario').val(usuario.tipoUsuario);
+                    $('#editModal').modal('show');
+                },
+                error: function(error) {
+                    console.error('Erro ao buscar o usuário:', error);
+                }
+            });
+        });
+    }
+
+    function chamarDelecao() {
+        $('#usuarioTableBody').on('click', '.delete-btn', function(){
+            const idUsuario = $(this).data('id');
+            const nomeUsuario = $(this).data('nome');
+            $('#deleteId').val(idUsuario);
+            $('#deleteNome').val(nomeUsuario);
+            $('#deleteModal').modal('show');
         });
     }
 })

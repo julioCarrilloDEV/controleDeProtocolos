@@ -29,5 +29,8 @@ router.get('/admin/usuarios', authMiddleware, (req, res) => {
     res.render('admin/adminUsuarios');
 })
 router.get('/api/admin/usuarios', authMiddleware, usuariosAdmin.getUsuarios);
+router.get('/api/admin/usuarios/:id', authMiddleware, usuariosAdmin.getUsuariosEdit);
 router.post('/admin/usuarios', authMiddleware, usuariosAdmin.addUsuario);
+router.post('/admin/usuarios/edit', authMiddleware, usuariosAdmin.editUsuario);
+router.post('/admin/usuarios/delete', authMiddleware, usuariosAdmin.deleteUsuario);
 module.exports = router;
