@@ -2,6 +2,7 @@ $(document).ready(function(){
     carregarUsuarios();
     chamarEdicao();
     chamarDelecao();
+    chamarView();
 
     function carregarUsuarios() {
         $.ajax({
@@ -13,11 +14,9 @@ $(document).ready(function(){
                     $('#usuarioTableBody').append(`
                         <tr>
                             <td>${usuario.nome}</td> 
-                            <td>${usuario.usuario}</td>
-                            <td>${usuario.tipoUsuario}</td>
                             <td class="text-center">
-                                <button class="btn btn-sm btn-info upload-btn" data-id="${usuario.id}" data-nome="${usuario.nome}">
-                                    <i class="bi bi-file-earmark-arrow-up"></i>
+                                <button class="btn btn-sm btn-primary view-btn" data-id="${usuario.id}" data-nome="${usuario.nome}">
+                                    <i class="bi bi-eye"></i>
                                 </button>
                                 <button class="btn btn-sm btn-warning edit-btn" data-id="${usuario.id}" data-nome="${usuario.nome}">
                                     <i class="bi bi-pencil"></i>
@@ -32,7 +31,27 @@ $(document).ready(function(){
             }
         });
     }
-
+    function chamarView(){
+        $('#usuarioTableBody').on('click', '.view-btn', function(){
+            const idUsuario = $(this).data('id');
+            $.ajax({
+                url: `/api/admin/usuarios/${idUsuario}`,
+                method: 'GET',
+                success: function(usuario) {
+                    // Preencher o formulário com os dados do usuário
+                    $('#viewId').val(usuario.id);
+                    $('#viewNome').val(usuario.nome);
+                    $('#viewUsuario').val(usuario.usuario);
+                    $('#viewEmail').val(usuario.email);
+                    $('#viewTipoUsuario').val(usuario.tipoUsuario);
+                    $('#viewModal').modal('show');
+                },
+                error: function(error) {
+                    console.error('Erro ao buscar o usuário:', error);
+                }
+            });
+        });
+    }
     function chamarEdicao() {
         $('#usuarioTableBody').on('click', '.edit-btn', function(){
             const idUsuario = $(this).data('id');

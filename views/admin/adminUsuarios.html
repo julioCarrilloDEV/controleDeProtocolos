@@ -1,6 +1,7 @@
 <%- include('../partials/head.html') %>
 <%- include('../partials/header.html') %>
 
+
 <div class="container mt-5">
     <h1>Gerenciar Usuários</h1>
     <div class="row">
@@ -15,9 +16,7 @@
         <thead>
             <tr>
                 <th>Nome</th>
-                <th>Login</th>
-                <th>Tipo de Usuário</th>
-                <th class="text-center">Ações</th>
+                <th class="text-center" style="width: 50%;">Ações</th>
             </tr>
         </thead>
         <tbody id="usuarioTableBody">
@@ -60,6 +59,41 @@
                         <input type="password" class="form-control" id="senha" name="senha" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Adicionar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal para visualizar dados de um usuário -->
+<div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="viewModalLabel">Visualizar Usuário</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="viewUserForm">
+                    <input type="hidden" id="viewId" name="id">
+                    <div class="mb-3">
+                        <label for="viewNome" class="form-label">Nome do usuário</label>
+                        <input type="text" class="form-control" id="viewNome" name="nome"  required readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="viewUsuario" class="form-label">Usuário</label>
+                        <input type="text" class="form-control" id="viewUsuario" name="usuario" required readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="viewEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="viewEmail" name="email" required readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="viewTipoUsuario" class="form-label">Tipo de Usuário</label>
+                        <select class="form-select" id="viewTipoUsuario" name="tipoUsuario" required disabled>
+                            <option value="comum">Comum</option>
+                            <option value="admin">Administrador</option>
+                        </select>
+                    </div>
                 </form>
             </div>
         </div>
