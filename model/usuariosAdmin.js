@@ -77,5 +77,49 @@ module.exports = {
                 console.error('Erro ao deletar usuário:', err);
                 res.status(500).json({ error: 'Erro interno do servidor' });
             });
+    },
+    getUsuariosCategorias: (req, res) => {
+        const id = req.params.id;
+        const query = `
+            SELECT * FROM categoria
+            JOIN usuario_categoria ON categoria.idCategoria = usuario_categoria.categoriaID
+            WHERE usuario_categoria.usuarioID = ${id};
+        `;
+        sequelize.query(query)
+            .then(result => {
+                res.json(result[0]);
+            })
+            .catch(err => {
+                console.error('Erro ao buscar categorias do usuário', err);
+                res.status(500).send('Erro ao buscar categorias do usuário');
+            });
+    },
+    associateUsuariosCategorias: (req, res) => {
+        const idUsuario = req.params.id;
+        const categoriasIds = req.body.categoriasIds;
+    
+        // Atualizar categorias para associar ao usuário
+        const updateQueries = categoriasIds.map(idCategoria => `
+            INSERT INTO usuario_categoria (usuarioID, categoriaID)
+            VALUES (${idUsuario}, ${idCategoria})
+            ON DUPLICATE KEY UPDATE categoriaID = ${idCategoria};
+        `);
+    
+        // Atualizar categorias para desassociar do usuário
+        const desassociateQuery = `
+            DELETE FROM usuario_categoria
+            WHERE usuarioID = ${idUsuario}
+            AND categoriaID NOT IN (${categoriasIds.join(', ')});
+        `;
+    
+        Promise.all(updateQueries.map(query => sequelize.query(query)))
+            .then(() => sequelize.query(desassociateQuery))
+            .then(() => {
+                res.status(200).send('Associações atualizadas com sucesso');
+            })
+            .catch(err => {
+                console.error('Erro ao associar categorias ao usuário:', err);
+                res.status(500).send('Erro ao associar categorias ao usuário');
+            });
     }
 }

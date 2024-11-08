@@ -30,7 +30,10 @@ router.get('/admin/usuarios', authMiddleware, (req, res) => {
 })
 router.get('/api/admin/usuarios', authMiddleware, usuariosAdmin.getUsuarios);
 router.get('/api/admin/usuarios/:id', authMiddleware, usuariosAdmin.getUsuariosEdit);
+router.get('/api/admin/usuarios/categorias/:id', authMiddleware, usuariosAdmin.getUsuariosCategorias);
 router.post('/admin/usuarios', authMiddleware, usuariosAdmin.addUsuario);
 router.post('/admin/usuarios/edit', authMiddleware, usuariosAdmin.editUsuario);
 router.post('/admin/usuarios/delete', authMiddleware, usuariosAdmin.deleteUsuario);
+router.post('/api/admin/usuarios/categorias/:id', authMiddleware, usuariosAdmin.associateUsuariosCategorias);
+
 module.exports = router;

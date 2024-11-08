@@ -3,6 +3,8 @@ $(document).ready(function(){
     chamarEdicao();
     chamarDelecao();
     chamarView();
+    chamarAssociacoes();
+    salvarAssociacoes();
 
     function carregarUsuarios() {
         $.ajax({
@@ -15,6 +17,9 @@ $(document).ready(function(){
                         <tr>
                             <td>${usuario.nome}</td> 
                             <td class="text-center">
+                                <button class="btn btn-sm btn-dark assocCat-btn" data-id="${usuario.id}" data-nome="${usuario.nome}">
+                                    <i class="bi bi-calendar2-plus"></i>
+                                </button>
                                 <button class="btn btn-sm btn-primary view-btn" data-id="${usuario.id}" data-nome="${usuario.nome}">
                                     <i class="bi bi-eye"></i>
                                 </button>
@@ -34,6 +39,7 @@ $(document).ready(function(){
     function chamarView(){
         $('#usuarioTableBody').on('click', '.view-btn', function(){
             const idUsuario = $(this).data('id');
+            console.log('Visualizar usuário:', idUsuario);
             $.ajax({
                 url: `/api/admin/usuarios/${idUsuario}`,
                 method: 'GET',
@@ -81,6 +87,77 @@ $(document).ready(function(){
             $('#deleteId').val(idUsuario);
             $('#deleteNome').val(nomeUsuario);
             $('#deleteModal').modal('show');
+            console.log('Deletar usuário:', idUsuario);
         });
     }
+
+    function chamarAssociacoes(){
+            $('#usuarioTableBody').on('click', '.assocCat-btn', function() {
+                const idUsuario = $(this).data('id');
+                $('#assocIdUsuario').val(idUsuario);
+                
+                // Buscar todas as categorias disponíveis e preencher o select
+                $.ajax({
+                    url: '/api/admin/categorias',
+                    method: 'GET',
+                    success: function(categorias) {
+                        $('#categoriasList').empty();
+                        categorias.forEach(categoria => {
+                            $('#categoriasList').append(`
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="${categoria.idCategoria}" id="categoria-${categoria.idCategoria}">
+                                    <label class="form-check-label" for="categoria-${categoria.idCategoria}">
+                                        ${categoria.nomeCategoria}
+                                    </label>
+                                </div>
+                            `);
+                        });
+        
+                        // Buscar e marcar as categorias já associadas ao usuário
+                        $.ajax({
+                            url: `/api/admin/usuarios/categorias/${idUsuario}`,
+                            method: 'GET',
+                            success: function(categoriasAssociadas) {
+                                categoriasAssociadas.forEach(categoria => {
+                                    $(`#categoria-${categoria.idCategoria}`).prop('checked', true);
+                                });
+                                $('#assocCategoriasModal').modal('show');
+                            },
+                            error: function(error) {
+                                console.error('Erro ao buscar categorias do usuário:', error);
+                            }
+                        });
+                    },
+                    error: function(error) {
+                        console.error('Erro ao buscar categorias:', error);
+                    }
+                });
+            });
+        }
+
+    function salvarAssociacoes(){
+        $('#assocCategoriasForm').submit(function(e) {
+            e.preventDefault();
+            const idUsuario = $('#assocIdUsuario').val();
+            const categoriasIds = [];
+            $('#categoriasList input:checked').each(function() {
+                categoriasIds.push($(this).val());
+            });
+    
+            $.ajax({
+                url: `/api/admin/usuarios/categorias/${idUsuario}`,
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({categoriasIds}),
+                success: function() {
+                    $('#assocCategoriasModal').modal('hide');
+                    alert('Associações atualizadas com sucesso');
+                },
+                error: function(error) {
+                    console.error('Erro ao salvar associações:', error);
+                }
+            });
+        });
+    }    
+
 })
