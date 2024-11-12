@@ -1,15 +1,56 @@
 <%- include('partials/head.html') %>
 <%- include('partials/header.html') %>
+
+<div class="container mt-5">
+    <h1>Seja bem-vindo, <%= nome %></h1>
     
-    
-    <!-- Conteúdo Geral -->
-    <div class="row">
-        <div class="col">
-            <h1>Seja bem-vindo, <%= nome %></h1>
-            <h1>Seu ID é: <%= id %></h1>
-            <h1>Seu usuário é: <%= usuario %></h1>
-            <h1>Seu tipo de usuário é: <%= tipoUsuario %></h1>
+    <!-- Carrossel com imagens -->
+    <div id="carouselExampleIndicators" class="carousel slide mt-4" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="https://www.unimed.coop.br/site/documents/3253618/0/AF_unimed-novembro-azul-webbanner.png/11a98a29-1a17-13f8-0012-239fb290f444?t=1730976547351&download=true" class="d-block w-100" alt="Imagem 1">
+            </div>
+            <div class="carousel-item">
+                <img src="https://www.unimed.coop.br/site/documents/3253618/0/BANNER.png/aa64fd40-b22e-4fa1-7a92-f881cef9e633?t=1680702335500&download=true" class="d-block w-100" alt="Imagem 2">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Anterior</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Próximo</span>
+        </button>
+    </div>
+
+    <!-- Botões de atalho -->
+    <div class="row mt-4">
+        <div class="col-6 mb-3">
+            <a href="/protocolos" class="btn btn-secondary btn-home w-100">
+                <i class="bi bi-file-earmark-text me-1"></i> Protocolos
+            </a>
+        </div>
+        <div class="col-6 mb-3">
+            <a href="/categorias" class="btn btn-warning btn-home w-100">
+                <i class="bi bi-grid me-1"></i> Categorias
+            </a>
+        </div>
+        <div class="col-6 mb-3">
+            <a href="/favoritos" class="btn btn-success btn-home w-100">
+                <i class="bi bi-star me-1"></i> Favoritos
+            </a>
+        </div>
+        <div class="col-6 mb-3">
+            <a href="/perfil" class="btn btn-dark btn-home w-100">
+                <i class="bi bi-person me-1"></i> Meu Perfil
+            </a>
         </div>
     </div>
+</div>
     
  <%- include('partials/footer.html') %>

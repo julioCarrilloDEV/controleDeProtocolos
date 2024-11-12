@@ -1,24 +1,39 @@
 <%- include('partials/head.html') %>
 <%- include('partials/header.html') %>
 
-
-<div class="container mt-5">
+<div class="container mt-2">
     <div class="row">
-        <div class="col">
-            <h1>Seja bem-vindo, <%= nome %></h1>
-           <!-- Campo para exibir a foto do usuário -->
-           <img src="/uploads/<%= foto %>" alt="Foto de perfil" class="img-thumbnail" style="width: 200px; height: 200px;">
-           <button class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#modalAlterarFoto">Alterar Foto</button>
+        <div class="col-12 text-center">
+            <!-- Foto de perfil arredondada -->
+            <img src="/uploads/<%= foto %>" class="rounded-circle img-thumbnail mb-1" alt="Foto de Perfil" style="width: 130px; height: 130px;">
+            <h2><%= nome %></h2>
+            <p><%= email %></p>
+        </div>
+    </div>
+    
+    <!-- Informações do perfil -->
+    <div class="row mt-1">
+        <div class="col-12">
+            <h4>Informações do Perfil</h4>
+            <ul class="list-group">
+                <li class="list-group-item"><strong>Nome:</strong> <%= nome %></li>
+                <li class="list-group-item"><strong>Email:</strong> <%= email %></li>
+                <li class="list-group-item"><strong>Usuário:</strong> <%= usuario %></li>
+                <li class="list-group-item"><strong>Tipo de Usuário:</strong> <%= tipoUsuario %></li>
+            </ul>
+        </div>
+    </div>
 
-
-            <p><b>ID:</b> <%= id %></p>
-            <p><b>Usuário:</b> <%= usuario %></p>
-            <p><b>Email:</b> <%= email %></p>
-            <p><b>Tipo de usuário:</b> <%= tipoUsuario %></p>
-            <div class="mt-4">
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalEditarPerfil">Editar</button>
-                <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modalAlterarSenha">Alterar Senha</button>
-            </div>
+    <!-- Botões de ação -->
+    <div class="row mt-4">
+        <div class="col-4">
+            <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#modalEditarPerfil"> <i class="bi bi-pencil"></i> Editar Perfil</button>
+        </div>
+        <div class="col-4">
+            <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modalAlterarSenha"><i class="bi bi-key"></i> Alterar Senha</button>
+        </div>
+        <div class="col-4">
+            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalAlterarFoto"><i class="bi bi-file-image"></i> Alterar Foto</button>
         </div>
     </div>
 </div>
