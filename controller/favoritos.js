@@ -9,7 +9,7 @@ $(document).ready(function(){
                 const anexoUrl = `/uploads/${favorito.anexo}`;
                 favoritosTable.append(`
                     <tr>
-                        <td><a href="${anexoUrl}" >${favorito.descricao}</a></td>
+                        <td><a href="#" class="view-pdf" data-url="${anexoUrl}">${favorito.descricao}</a></td>
                         <td class="text-center">
                             <i class="bi bi-star-fill" data-id="${favorito.idProtocolo}" data-favorito="true"></i>
                         </td>
@@ -44,6 +44,23 @@ $(document).ready(function(){
         },
         error: function(error){
             console.error('Erro ao buscar favoritos:', error);
+        }
+    });
+
+     // Adicionar evento de clique para os links de visualização de PDF
+     $('#tabela-favoritos').on('click', '.view-pdf', function(e){
+        e.preventDefault();
+        const pdfUrl = $(this).data('url');
+        console.log("pdfUrl", pdfUrl);
+        if (pdfUrl === '/uploads/') {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Arquivo não encontrado',
+                text: 'O arquivo PDF não está disponível.',
+            });
+        } else {
+            renderPDF(pdfUrl);
+            $('#pdfModal').modal('show');
         }
     });
 });

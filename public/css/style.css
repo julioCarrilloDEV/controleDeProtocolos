@@ -59,3 +59,9 @@
 .btn-home i {
     margin-right: 5px;
 }
+
+.pdf-page {
+    width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+}

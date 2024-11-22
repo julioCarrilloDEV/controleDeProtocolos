@@ -3,6 +3,7 @@ $(document).ready(function(){
     uploadProtocolo();
     editarProtocolo();
     deletarProtocolo();
+    visualizarPDF();
 
     function carregarProtocolos() {
         $.ajax({
@@ -14,7 +15,7 @@ $(document).ready(function(){
                     const anexoUrl = `/uploads/${protocolo.anexo}`;
                     $('#protocoloTableBody').append(`
                         <tr>
-                            <td><a href="${anexoUrl}" >${protocolo.descricao}</a></td> 
+                            <td><a href="#" class="view-pdf" data-url="${anexoUrl}">${protocolo.descricao}</a></td>
                             <td>${protocolo.nomeCategoria}</td>
                             <td class="text-center">
                                 <button class="btn btn-sm btn-info upload-btn" data-id="${protocolo.idProtocolo}" data-nome="${protocolo.descricao}">
@@ -34,6 +35,23 @@ $(document).ready(function(){
         });
     }
 
+    function visualizarPDF(){
+         $('#protocoloTableBody').on('click', '.view-pdf', function(e){
+            e.preventDefault();
+            const pdfUrl = $(this).data('url');
+            console.log("pdfUrl", pdfUrl);
+            if (pdfUrl === '/uploads/') {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Arquivo não encontrado',
+                    text: 'O arquivo PDF não está disponível.',
+                });
+            } else {
+                renderPDF(pdfUrl);
+                $('#pdfModal').modal('show');
+            }
+        });
+    }
     function uploadProtocolo(){
         $('#protocoloTableBody').on('click', '.upload-btn', function(){
             const idprotocolo = $(this).data('id');
