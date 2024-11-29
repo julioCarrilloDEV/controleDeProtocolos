@@ -1,15 +1,14 @@
-$(document).ready(function(){
-
-    
+$(document).ready(function(){    
     $.ajax({
         url: `/api/categorias/protocolos/${idCategoria}`,
         method: 'GET',
         success: function(data) {
+            $('#nomeCat').text(data[0].nomeCategoria);
             const protocolosList = $('#lista-categoriasProtocolos');
-            const anexoUrl = `/uploads/${protocolo.anexo}`;
             data.forEach(protocolo => {
+                const anexoUrl = `/uploads/${protocolo.anexo}`;
                 protocolosList.append(`
-                        <a href="#" class="view-pdf list-group-item list-group-item-action" data-url="${anexoUrl}">${protocolo.descricao}</a>
+                       <a href="#" class="view-pdf list-group-item list-group-item-action" data-url="${anexoUrl}">${protocolo.descricao}</a>
                     `);
             });
         },
