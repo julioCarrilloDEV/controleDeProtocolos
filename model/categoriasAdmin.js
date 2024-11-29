@@ -23,7 +23,7 @@ module.exports = {
         `;
         sequelize.query(query)
             .then(() => {
-                res.redirect('/admin/categorias?status=successAdd');
+                res.redirect('/admin/categorias?status=successCatAdd');
             })
             .catch(err => {
                 console.error('Erro ao adicionar categoria:', err);
@@ -100,7 +100,7 @@ module.exports = {
         Promise.all(updateQueries.map(query => sequelize.query(query)))
             .then(() => sequelize.query(desassociateQuery))
             .then(() => {
-                res.status(200).send('Associações atualizadas com sucesso');
+                res.redirect('/admin/categorias?status=successCatAssociate');
             })
             .catch(err => {
                 console.error('Erro ao associar protocolos à categoria:', err);

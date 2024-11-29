@@ -8,7 +8,7 @@ router.get('/categorias', (req, res) => {
     if (req.session.user) {
         res.render('categorias', { usuario: req.session.user.usuario });
     } else {
-        res.status(401).send('Você precisa fazer login para acessar esta página.');
+        res.redirect('/?message=disconnect');
     }
 });
 
@@ -17,7 +17,7 @@ router.get('/api/categorias', (req, res) => {
     if (req.session.user) {
         categorias(req, res);
     } else {
-        res.status(401).send('Você precisa fazer login para acessar esta página.');
+        res.redirect('/?message=disconnect');
     }
 });
 
@@ -26,7 +26,7 @@ router.get('/categorias/protocolos/:idCategoria', (req, res) => {
     if (req.session.user) {
         res.render('categoriasProtocolos', { idCategoria: req.params.idCategoria });
     } else {
-        res.status(401).send('Você precisa fazer login para acessar esta página.');
+        res.redirect('/?message=disconnect');
     }
 });
 
@@ -35,7 +35,7 @@ router.get('/api/categorias/protocolos/:idCategoria', (req, res) => {
     if (req.session.user) {
         categorias_protocolos(req, res);
     } else {
-        res.status(401).send('Você foi desconectado.');
+        res.redirect('/?message=disconnect');
     }
 });
 

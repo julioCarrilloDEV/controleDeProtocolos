@@ -16,7 +16,7 @@ router.get('/perfil', (req, res) => {
             id: req.session.user.id
         });
     } else {
-        res.status(401).send('Você precisa fazer login para acessar esta página.');
+        res.redirect('/?message=disconnect');
     }
 });
 
@@ -24,7 +24,7 @@ router.post('/perfil/upload/foto', upload.single('foto'), (req, res) => {
     if (req.session.user) {
         editFoto(req, res);
     } else {
-        res.status(401).send('Você precisa fazer login para acessar esta página.');
+        res.redirect('/?message=disconnect');
     }
 })
 
@@ -32,7 +32,7 @@ router.post('/editar/perfil', (req, res) => {
     if (req.session.user) {
         edit_perfilModel(req, res);
     } else {
-        res.status(401).send('Você precisa fazer login para acessar esta página.');
+        res.redirect('/?message=disconnect');
     }
 });
 
@@ -40,7 +40,7 @@ router.post('/editar/senha', (req, res) => {
     if (req.session.user) {
         edit_senhaModel(req, res);
     } else {
-        res.status(401).send('Você precisa fazer login para acessar esta página.');
+        res.redirect('/?message=disconnect');
     }
 });
 

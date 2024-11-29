@@ -5,6 +5,7 @@ $(document).ready(function() {
     deletarCategoria();
     associarCategoria();
     salvarAssociacoes();
+    exibirAlertas();
 
     // Função para carregar as categorias via AJAX
     function carregarCategorias() {
@@ -122,4 +123,33 @@ $(document).ready(function() {
         });
     }
 
+    function exibirAlertas(){
+        // Exibir alertas
+        const urlParams = new URLSearchParams(window.location.search);
+        const status = urlParams.get('status');
+        if (status === 'successCatAdd') {
+            Swal.fire({
+                text: "Categoria Adicionada com Sucesso!",
+                icon: "success"
+              });
+        }
+        if (status === 'successCatEdit') {
+            Swal.fire({
+                text: "Categoria Atualizada com Sucesso!",
+                icon: "success"
+              });
+        }
+        if (status === 'successCatDelete') {
+            Swal.fire({
+                text: "Categoria Removida com Sucesso!",
+                icon: "success"
+              });
+        }
+        if (status === 'successCatAssociate') {
+            Swal.fire({
+                text: "Protocolos Associados com Sucesso!",
+                icon: "success"
+              });
+        }
+    }
 });

@@ -24,5 +24,22 @@
 </section>
 
 <script src="login.js"></script>
+<script>
+  $(document).ready(function(){
+     // Função para obter o valor de uma query string
+     function pegarValorStatus(key) {
+        return new URLSearchParams(window.location.search).get(key);
+    }
+
+    const message = pegarValorStatus('message');
+    if (message) {
+      Swal.fire({
+            icon: 'info',
+            title: 'Desconectado(a)',
+            text: 'Você foi desconectado(a). Por favor, faça o login novamente.'
+        });
+    }
+  })
+</script>
 
 <%- include('partials/footer.html') %>

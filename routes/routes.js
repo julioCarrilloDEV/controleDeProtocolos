@@ -19,7 +19,7 @@ router.get('/home', (req, res) => {
             usuario: req.session.user.usuario 
         });
     } else {
-        res.status(401).send('Você precisa fazer login para acessar esta página.');
+        res.redirect('/?message=disconnect');
     }
 });
 

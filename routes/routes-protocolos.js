@@ -12,7 +12,7 @@ router.get('/protocolos', (req, res) => {
     if (req.session.user) {
         res.render('protocolos', { usuario: req.session.user.usuario });
     } else {
-        res.status(401).send('Você precisa fazer login para acessar esta página.');
+        res.redirect('/?message=disconnect');
     }
 });
 
@@ -21,7 +21,7 @@ router.get('/api/protocolos', (req, res) => {
     if (req.session.user) {
         protocolos(req, res);
     } else {
-        res.status(401).send('Você precisa fazer login para acessar esta página.');
+        res.redirect('/?message=disconnect');
     }
 });
 
@@ -29,7 +29,7 @@ router.get('/api/protocolos/protocolosFavoritos', (req, res) => {
     if (req.session.user) {
         protocolosFavoritos(req, res);
     } else {
-        res.status(401).send('Você precisa fazer login para acessar esta página.');
+        res.redirect('/?message=disconnect');
     }
 });
 
@@ -37,7 +37,7 @@ router.post('/api/protocolos/favoritar', (req, res) => {
     if (req.session.user) {
         favoritarProtocolos(req, res);
     } else {
-        res.status(401).send('Você precisa fazer login para acessar esta página.');
+        res.redirect('/?message=disconnect');
     }
 });
 
@@ -45,17 +45,12 @@ router.post('/api/protocolos/desfavoritar', (req, res) => {
     if (req.session.user) {
         desfavoritarProtocolos(req, res);
     } else {
-        res.status(401).send('Você precisa fazer login para acessar esta página.');
+        res.redirect('/?message=disconnect');
     }
 });
 
 router.post('/api/protocolos/anexo', upload.single('anexo'), (req, res) => {
     anexoProtocolo(req, res);
-    // if (req.session.user) {
-    //     anexoProtocolo(req, res);
-    // } else {
-    //     res.status(401).send('Você precisa fazer login para acessar esta página.');
-    // }
 });
 
 module.exports = router;
