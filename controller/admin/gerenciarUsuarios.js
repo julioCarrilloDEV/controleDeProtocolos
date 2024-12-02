@@ -7,6 +7,7 @@ $(document).ready(function(){
     salvarAssociacoes();
     chamarProtocolos();
     salvarProtocolos();
+    exibirAlertas();
 
     function carregarUsuarios() {
         $.ajax({
@@ -156,7 +157,10 @@ $(document).ready(function(){
                 data: JSON.stringify({categoriasIds}),
                 success: function() {
                     $('#assocCategoriasModal').modal('hide');
-                    alert('Associações atualizadas com sucesso');
+                    Swal.fire({
+                        text: "Categorias Associadas com sucesso!",
+                        icon: "success"
+                      });
                 },
                 error: function(error) {
                     console.error('Erro ao salvar associações:', error);
@@ -225,7 +229,10 @@ $(document).ready(function(){
                 data: JSON.stringify({protocolosIds}),
                 success: function() {
                     $('#assocProtocolosModal').modal('hide');
-                    alert('Associações atualizadas com sucesso');
+                    Swal.fire({
+                        text: "Protocolos Associados com Sucesso!",
+                        icon: "success"
+                      });
                 },
                 error: function(error) {
                     console.error('Erro ao salvar associações:', error);
@@ -233,4 +240,40 @@ $(document).ready(function(){
             });
         });
     }   
+
+    function exibirAlertas(){
+        // Exibir alertas
+        const urlParams = new URLSearchParams(window.location.search);
+        const status = urlParams.get('status');
+        if (status === 'successAddUser') {
+            Swal.fire({
+                text: "Usuário Adicionado com Sucesso!",
+                icon: "success"
+              });
+        }
+        if (status === 'successEditUser') {
+            Swal.fire({
+                text: "Usuário Alterado com Sucesso!",
+                icon: "success"
+              });
+        }
+        if (status === 'successDeleteUser') {
+            Swal.fire({
+                text: "Usuário Removido com Sucesso!",
+                icon: "success"
+              });
+        }
+        if (status === 'errorUserWithSpaces') {
+            Swal.fire({
+                text: "O campo usuário não pode conter espaços! Por favor, tente novamente.",
+                icon: "warning"
+              });
+        }
+        if (status === 'errorUserExists') {
+            Swal.fire({
+                text: "Já existe um cadastro com este usuário! Por favor, tente novamente.",
+                icon: "warning"
+              });
+        }
+    }
 })

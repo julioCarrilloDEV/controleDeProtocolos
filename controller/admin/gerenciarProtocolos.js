@@ -4,6 +4,7 @@ $(document).ready(function(){
     editarProtocolo();
     deletarProtocolo();
     visualizarPDF();
+    exibirAlertas();
 
     function carregarProtocolos() {
         $.ajax({
@@ -81,5 +82,34 @@ $(document).ready(function(){
             $('#idProtocoloDelete').val(idprotocolo);
             $('#deleteModal').modal('show');
         });
+    }
+
+    function exibirAlertas(){
+        const urlParams = new URLSearchParams(window.location.search);
+        const status = urlParams.get('status');
+        if (status === 'successAdd') {
+            Swal.fire({
+                text: "Protocolo Adicionado com Sucesso!",
+                icon: "success"
+              });
+        }
+        if (status === 'successEdit') {
+            Swal.fire({
+                text: "Protocolo Atualizado com Sucesso!",
+                icon: "success"
+              });
+        }
+        if (status === 'successDelete') {
+            Swal.fire({
+                text: "Protocolo Removido com Sucesso!",
+                icon: "success"
+              });
+        }
+        if (status === 'successUpload') {
+            Swal.fire({
+                text: "Arquivo adicionado com Sucesso!",
+                icon: "success"
+              });
+        }
     }
 })

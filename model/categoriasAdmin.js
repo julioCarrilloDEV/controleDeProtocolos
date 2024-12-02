@@ -50,12 +50,24 @@ module.exports = {
     }, 
     deleteCategoria: (req, res) => {
         const idCategoria = req.body.idCategoria;
-        console.log('Valor de id'+ idCategoria);
-        const query = `
+        
+         // Query to delete from usuario_categoria
+        const deleteUsuarioCategoriaQuery = `
+            DELETE FROM usuario_categoria
+            WHERE categoriaID = ${idCategoria};
+        `;
+
+        // Query to delete from categoria
+        const deleteCategoriaQuery = `
             DELETE FROM categoria
             WHERE idCategoria = ${idCategoria};
         `;
-        sequelize.query(query)
+
+        // Execute the queries in sequence
+        sequelize.query(deleteUsuarioCategoriaQuery)
+            .then(() => {
+                return sequelize.query(deleteCategoriaQuery);
+            })
             .then(() => {
                 res.redirect('/admin/categorias?status=successCatDelete');
             })
@@ -78,11 +90,11 @@ module.exports = {
             });
     },
     associateProtocolos: (req, res) => {
-        const idCategoria = req.params.idCategoria;
-        const protocolosIds = req.body.protocolosIds;
+        const idCategoria = req.params.idCategoria; // Obtém o ID da categoria a partir dos parâmetros da requisição
+        const protocolosIds = req.body.protocolosIds || []; // Garante que protocolosIds seja sempre um array, mesmo se não for enviado no formulário
 
         // Atualizar protocolos para associar à categoria
-        //O map está percorrendo o array de protocolosIds e para cada id de protocolo, está criando uma query de update que associa o protocolo à categoria
+        // Percorre o array protocolosIds e cria uma consulta de atualização para cada protocolo
         const updateQueries = protocolosIds.map(idProtocolo => `
             UPDATE protocolo
             SET categoriaID = ${idCategoria}
@@ -90,19 +102,32 @@ module.exports = {
         `);
 
         // Atualizar protocolos para desassociar da categoria
-        const desassociateQuery = `
-            UPDATE protocolo
-            SET categoriaID = NULL
-            WHERE categoriaID = ${idCategoria}
-            AND idProtocolo NOT IN (${protocolosIds.join(', ')});
-        `;
-        //Recebe um array de promises e só continua depois que todas forem resolvidas, isto é, todas as queries de update forem executadas
-        Promise.all(updateQueries.map(query => sequelize.query(query)))
-            .then(() => sequelize.query(desassociateQuery))
+        let desassociateQuery = '';
+        if (protocolosIds.length > 0) {
+            // Se o array protocolosIds não estiver vazio, remove a associação apenas dos protocolos que não estão no array
+            desassociateQuery = `
+                UPDATE protocolo
+                SET categoriaID = NULL
+                WHERE categoriaID = ${idCategoria}
+                AND idProtocolo NOT IN (${protocolosIds.join(', ')});
+            `;
+        } else {
+            // Se o array estiver vazio, desassocia todos os protocolos da categoria
+            desassociateQuery = `
+                UPDATE protocolo
+                SET categoriaID = NULL
+                WHERE categoriaID = ${idCategoria};
+            `;
+        }
+        // Executa todas as queries de associação em paralelo e, em seguida, a query de desassociação
+        Promise.all(updateQueries.map(query => sequelize.query(query))) // Resolve todas as queries geradas para associar protocolos
+            .then(() => sequelize.query(desassociateQuery)) // Após associar, executa a query de desassociação
             .then(() => {
+                // Redireciona para a página de categorias com uma mensagem de sucesso
                 res.redirect('/admin/categorias?status=successCatAssociate');
             })
             .catch(err => {
+                // Em caso de erro, exibe no console e retorna uma mensagem de erro ao cliente
                 console.error('Erro ao associar protocolos à categoria:', err);
                 res.status(500).send('Erro ao associar protocolos à categoria');
             });

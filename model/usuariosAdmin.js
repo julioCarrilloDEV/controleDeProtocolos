@@ -14,25 +14,39 @@ module.exports = {
             res.status(500).send('Erro ao buscar usuários');
         });
     },
-    addUsuario: (req,res) => {
-        const { nome, usuario, email, tipoUsuario, senha} = req.body;
-        
-        // Query SQL para inserir um novo usuário
-        const query = `
-            INSERT INTO usuario (nome, usuario, email, senha, tipoUsuario)
-            VALUES ('${nome}', '${usuario}','${email}', '${senha}', '${tipoUsuario}');
-        `;
+    addUsuario: async (req,res) => {
+        const { nome, usuario, email, tipoUsuario, senha } = req.body;
 
-        // Executa a query no banco de dados
-        sequelize.query(query)
-            .then(() => {
-                res.redirect('/admin/usuarios?status=successAddUser');
+        // Validar que 'usuario' não contém espaços
+        if (/\s/.test(usuario)) {
+            return res.redirect('/admin/usuarios?status=errorUserWithSpaces');
+        }
 
-            })
-            .catch(err => {
-                console.error('Erro ao inserir usuário:', err);
-                res.status(500).json({ error: 'Erro interno do servidor' });
-            });
+        try {
+            // Verificar se o nome de usuário já existe
+            const [existingUsers] = await sequelize.query(`
+                SELECT * FROM usuario WHERE usuario = '${usuario}';
+            `);
+
+            if (existingUsers.length > 0) {
+                // Nome de usuário já existente
+                return res.redirect('/admin/usuarios?status=errorUserExists');
+            }
+
+            // Query SQL para inserir um novo usuário
+            const query = `
+                INSERT INTO usuario (nome, usuario, email, senha, tipoUsuario)
+                VALUES ('${nome}', '${usuario}','${email}', '${senha}', '${tipoUsuario}');
+            `;
+
+            // Executa a query no banco de dados
+            await sequelize.query(query);
+
+            res.redirect('/admin/usuarios?status=successAddUser');
+        } catch (err) {
+            console.error('Erro ao inserir usuário:', err);
+            res.status(500).json({ error: 'Erro interno do servidor' });
+        }
     },
     getUsuariosEdit: (req,res) => {
         const id = req.params.id;

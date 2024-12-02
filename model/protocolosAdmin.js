@@ -40,7 +40,7 @@ module.exports = {
         `;
         sequelize.query(query)
             .then(() => {
-                res.json({ success: true, message: 'Arquivo de protocolo salvo com sucesso!' });
+                res.redirect('/admin/protocolos?status=successUpload');
             })
             .catch(err => {
                 console.error('Erro ao salvar arquivo de protocolo:', err);

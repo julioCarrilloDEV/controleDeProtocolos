@@ -117,7 +117,10 @@ $(document).ready(function() {
                 data: JSON.stringify({protocolosIds}),
                 success: function() {
                     $('#associateModal').modal('hide');
-                    alert('Associações atualizadas com sucesso');
+                    Swal.fire({
+                        text: "Protocolos Associados com Sucesso!",
+                        icon: "success"
+                      });
                 }
             });
         });
