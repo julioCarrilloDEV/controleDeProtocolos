@@ -80,14 +80,26 @@ module.exports = {
     },
     deleteUsuario: (req,res) => {
         const id = req.body.id;
-        const query = `
+
+        const usuarioCategoriaQuery = `
+            DELETE FROM usuario_categoria WHERE usuarioID = ${id};
+        `;
+        const usuarioProtocoloQuery = `
+            DELETE FROM usuario_protocolo WHERE usuarioID = ${id};
+        `;
+        const usuarioQuery = `
             DELETE FROM usuario WHERE id = ${id};
         `;
-        sequelize.query(query)
+        // Executa as queries em sequência
+        sequelize.query(usuarioCategoriaQuery) 
+            .then(() => sequelize.query(usuarioProtocoloQuery)) 
+            .then(() => sequelize.query(usuarioQuery))
             .then(() => {
+                // Redireciona em caso de sucesso
                 res.redirect('/admin/usuarios?status=successDeleteUser');
             })
             .catch(err => {
+                // Trata erros, se houver
                 console.error('Erro ao deletar usuário:', err);
                 res.status(500).json({ error: 'Erro interno do servidor' });
             });
@@ -109,29 +121,43 @@ module.exports = {
             });
     },
     associateUsuariosCategorias: (req, res) => {
-        const idUsuario = req.params.id;
-        const categoriasIds = req.body.categoriasIds;
-    
+        const idUsuario = req.params.id; // Obtém o ID do usuário a partir dos parâmetros da requisição
+        const categoriasIds = req.body.categoriasIds || []; // Garante que categoriasIds seja sempre um array, mesmo se não for enviado no formulário
+
         // Atualizar categorias para associar ao usuário
+        // Cria queries de inserção para associar categorias ao usuário
         const updateQueries = categoriasIds.map(idCategoria => `
             INSERT INTO usuario_categoria (usuarioID, categoriaID)
             VALUES (${idUsuario}, ${idCategoria})
-            ON DUPLICATE KEY UPDATE categoriaID = categoriaID;
+            ON DUPLICATE KEY UPDATE categoriaID = categoriaID; 
         `);
-    
+
         // Atualizar categorias para desassociar do usuário
-        const desassociateQuery = `
-            DELETE FROM usuario_categoria
-            WHERE usuarioID = ${idUsuario}
-            AND categoriaID NOT IN (${categoriasIds.join(', ')});
-        `;
-    
-        Promise.all(updateQueries.map(query => sequelize.query(query)))
-            .then(() => sequelize.query(desassociateQuery))
+        let desassociateQuery = '';
+        if (categoriasIds.length > 0) {
+            // Se o array categoriasIds não estiver vazio, remove apenas categorias que não estão no array
+            desassociateQuery = `
+                DELETE FROM usuario_categoria
+                WHERE usuarioID = ${idUsuario}
+                AND categoriaID NOT IN (${categoriasIds.join(', ')});
+            `;
+        } else {
+            // Se o array estiver vazio, remove todas as associações do usuário
+            desassociateQuery = `
+                DELETE FROM usuario_categoria
+                WHERE usuarioID = ${idUsuario};
+            `;
+        }
+
+        // Executa as queries de associação em paralelo e, em seguida, a query de desassociação
+        Promise.all(updateQueries.map(query => sequelize.query(query))) // Resolve todas as queries geradas para associar categorias
+            .then(() => sequelize.query(desassociateQuery)) // Após associar, executa a query de desassociação
             .then(() => {
+                // Retorna sucesso caso todas as operações tenham sido concluídas
                 res.status(200).send('Associações atualizadas com sucesso');
             })
             .catch(err => {
+                // Em caso de erro, exibe no console e retorna uma mensagem de erro ao cliente
                 console.error('Erro ao associar categorias ao usuário:', err);
                 res.status(500).send('Erro ao associar categorias ao usuário');
             });
@@ -154,7 +180,7 @@ module.exports = {
     },
     associateUsuariosProtocolos: (req, res) => {
         const idUsuario = req.params.id;
-        const protocolosIds = req.body.protocolosIds;
+        const protocolosIds = req.body.protocolosIds || [];
     
         // Atualizar protocolos para associar ao usuário
         const updateQueries = protocolosIds.map(idProtocolo => `
@@ -164,11 +190,19 @@ module.exports = {
         `);
     
         // Atualizar protocolos para desassociar do usuário
-        const desassociateQuery = `
-            DELETE FROM usuario_protocolo
-            WHERE usuarioID = ${idUsuario}
-            AND protocoloID NOT IN (${protocolosIds.join(', ')});
-        `;
+        let desassociateQuery = '';
+        if (protocolosIds.length > 0) {
+            desassociateQuery = `
+                DELETE FROM usuario_protocolo
+                WHERE usuarioID = ${idUsuario}
+                AND protocoloID NOT IN (${protocolosIds.join(', ')});
+            `;
+        } else {
+            desassociateQuery = `
+                DELETE FROM usuario_protocolo
+                WHERE usuarioID = ${idUsuario};
+            `;
+        }
     
         Promise.all(updateQueries.map(query => sequelize.query(query)))
             .then(() => sequelize.query(desassociateQuery))
