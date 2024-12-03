@@ -10,10 +10,9 @@
                   <i class="bi bi-person-circle" id="icon-login"></i>
                   <form method="post" id="form-login">
                       <input type="text" name="usuario" id="usuario" class="form-control my-4 py-2" placeholder="Digite seu usuário..." />
-                      <input type="text" name="senha" id="senha" class="form-control my-4 py-2" placeholder="Digite sua senha..." />
+                      <input type="password" name="senha" id="senha" class="form-control my-4 py-2" placeholder="Digite sua senha..." />
                       <div class="text-center mt-3">
                       <button type="submit" class="btn btn-success btn-lg" id="btn-login">Acessar</button>
-                      <!-- <b><a href="/cadastro" class="btn btn-link nav-link mt-4">Cadastrar-se</a></b> -->
                       </div>
                   </form>
               </div>
@@ -32,11 +31,17 @@
     }
 
     const message = pegarValorStatus('message');
-    if (message) {
+    if (message === 'disconnect') {
       Swal.fire({
             icon: 'info',
             title: 'Desconectado(a)',
             text: 'Você foi desconectado(a). Por favor, faça o login novamente.'
+        });
+    }
+    if (message === 'errorLogin') {
+      Swal.fire({
+            icon: 'error',
+            title: 'Usuário ou senha incorretos.'
         });
     }
   })

@@ -204,8 +204,16 @@ module.exports = {
             `;
         }
     
+        // Remover protocolos de favoritos ao desassociar
+        // protocoloIDs.length > 0 ? protocolosIds.join(', ') : 'NULL' assegura que a query seja válida mesmo quando nenhum protocolo é enviado
+            const removeFavoritesQuery = `
+            DELETE FROM favoritos
+            WHERE usuario_id = ${idUsuario}
+            AND protocolo_id NOT IN (${protocolosIds.length > 0 ? protocolosIds.join(', ') : 'NULL'});
+        `;
         Promise.all(updateQueries.map(query => sequelize.query(query)))
             .then(() => sequelize.query(desassociateQuery))
+            .then(() => sequelize.query(removeFavoritesQuery))
             .then(() => {
                 res.status(200).send('Associações atualizadas com sucesso');
             })

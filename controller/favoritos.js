@@ -1,4 +1,5 @@
 $(document).ready(function(){
+    buscar();
     // Obter os protocolos favoritados pelo usuário
     $.ajax({
         url: '/api/favoritos',
@@ -63,4 +64,19 @@ $(document).ready(function(){
             $('#pdfModal').modal('show');
         }
     });
+
+    function buscar(){
+        $('#buscar-favoritos').on('keyup', function() {
+            const termo = $(this).val().toLowerCase();
+            $('#tabela-favoritos tr').each(function() {
+                // Obtém o texto da primeira célula ('td:eq(0)') da linha atual e converte para letras minúsculas
+                const protocoloNome = $(this).find('td:eq(0)').text().toLowerCase();
+                if (protocoloNome.includes(termo)) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        });
+    }
 });

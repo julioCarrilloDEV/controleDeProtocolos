@@ -34,7 +34,7 @@ module.exports = (req, res) => {
                         usuario: user.usuario
                     });
             } else {
-                res.status(401).send({ error: 'Usuário ou senha incorretos.' });
+                res.redirect('/?message=errorLogin');
             }
         })
         .catch(error => {

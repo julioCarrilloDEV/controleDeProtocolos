@@ -1,4 +1,5 @@
 $(document).ready(function(){
+    buscar();
             $.ajax({
                 url: '/api/categorias',
                 method: 'GET',
@@ -22,4 +23,19 @@ $(document).ready(function(){
                 // Redirecionar para a nova página que exibe os protocolos
                 window.location.href = `/categorias/protocolos/${idCategoria}`;
             });
+
+            function buscar(){
+                $('#buscar-categorias').on('keyup', function() {
+                    const termo = $(this).val().toLowerCase();
+                    $('#lista-categorias .list-group-item').each(function() {
+                        // Obtém o texto do nome da categoria e converte para letras minúsculas
+                        const categoriaNome = $(this).text().toLowerCase();
+                        if (categoriaNome.includes(termo)) {
+                            $(this).show();
+                        } else {
+                            $(this).hide();
+                        }
+                    });
+                });
+            }
     });
